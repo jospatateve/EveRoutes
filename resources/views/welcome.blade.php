@@ -44,7 +44,7 @@
                 @elseif (isset($location))
                     <div class="title"><p>{{ Auth::user()->name }} @ {{ $location }}</p></div>
                 @endif
-                @if (count($errors) > 0)
+                @if (isset($errors) && (count($errors) > 0))
                     <div class="alert alert-danger">
                         <strong>Whoops! Something went wrong!</strong>
                         <br/><br/>
