@@ -30,5 +30,5 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('login/eveonline', 'LoginController@redirect');
     Route::get('login/eveonline/callback', 'LoginController@callback');
     Route::get('logout', 'LoginController@logout');
-	Route::get('location', 'LocationController@location');
+    Route::get('location', 'LocationController@location');
 });
