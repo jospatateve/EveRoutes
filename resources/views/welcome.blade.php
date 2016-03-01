@@ -44,14 +44,12 @@
                 @elseif (isset($location))
                     <div class="title"><p>{{ Auth::user()->name }} @ {{ $location }}</p></div>
                 @endif
-                @if (isset($errors) && (count($errors) > 0))
-                    <div class="alert alert-danger">
-                        <strong>Whoops! Something went wrong!</strong>
+                @if (isset($message))
+                    <div>
                         <br/><br/>
+                        <strong>Whoops! Something went wrong!</strong>
                         <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
+                            <li>{{ $message }}</li>
                         </ul>
                     </div>
                 @endif

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Auth;
 use Config;
+use Redirect;
 use Session;
 
 use Evelabs\OAuth2\Client\Provider\EveOnline;
@@ -27,10 +28,10 @@ class LocationController extends Controller
     public function location()
     {
         if (!Auth::check())  {
-            return Redirect::to('/')->with('message', 'User not logged on.');
+            return view('welcome')->with('message', 'User not logged on.');
         }
         if (!Session::has('evessotoken')) {
-            return Redirect::to('/')->with('message', 'No sso token provided.');
+            return view('welcome')->with('message', 'No sso token provided.');
         }
 
         $user = Auth::user();
@@ -38,7 +39,7 @@ class LocationController extends Controller
 
         if ($token->hasExpired()) {
             $token = $this->evesso->getAccessToken('refresh_token', [
-                'refresh_token' => $token->getRefreshToken();
+                'refresh_token' => $token->getRefreshToken()
             ]);
             Session::set('evessotoken', $token);
             Session::save();
