@@ -14,7 +14,7 @@ use Session;
 
 use Evelabs\OAuth2\Client\Provider\EveOnline;
 
-use App\EveUser;
+use App\User;
 
 class LoginController extends Controller
 {
@@ -67,7 +67,7 @@ class LoginController extends Controller
         try {
             $userinfo = $this->evesso->getResourceOwner($token);
 
-            $user = new EveUser;
+            $user = new User;
             $user->userid = $userinfo->getCharacterId();
             $user->name = $userinfo->getCharacterName();
             $user->owner = $userinfo->getCharacterOwnerHash();
