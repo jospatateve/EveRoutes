@@ -18,6 +18,7 @@ class LocationController extends Controller
 
     function __construct()
     {
+        $this->middleware('auth');
         $this->evesso = new EveOnline([
             'clientId'     => Config::get('eveonline.id'),
             'clientSecret' => Config::get('eveonline.secret'),
@@ -27,9 +28,6 @@ class LocationController extends Controller
 
     public function location()
     {
-        if (!Auth::check())  {
-            return view('welcome')->with('message', 'User not logged on.');
-        }
         if (!Session::has('evessotoken')) {
             return view('welcome')->with('message', 'No sso token provided.');
         }
