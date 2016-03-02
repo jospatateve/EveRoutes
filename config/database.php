@@ -55,6 +55,7 @@ return [
         'mysql' => [
             'driver'    => 'mysql',
             'host'      => env('DB_HOST', 'localhost'),
+            'port'      => env('DB_PORT', 3306),
             'database'  => env('DB_DATABASE', 'forge'),
             'username'  => env('DB_USERNAME', 'forge'),
             'password'  => env('DB_PASSWORD', ''),
@@ -63,6 +64,12 @@ return [
             'prefix'    => '',
             'strict'    => false,
             'engine'    => null,
+            'options' => (env('MYSQL_SSL')) ? [
+                PDO::MYSQL_ATTR_SSL_KEY    => env('MYSQL_SSL_KEY'),
+                PDO::MYSQL_ATTR_SSL_CERT   => env('MYSQL_SSL_CERT'),
+                PDO::MYSQL_ATTR_SSL_CA     => env('MYSQL_SSL_CA'),
+                PDO::MYSQL_ATTR_SSL_CIPHER => env('MYSQL_SSL_CIPHER'),
+            ] : [],
         ],
 
         'pgsql' => [
