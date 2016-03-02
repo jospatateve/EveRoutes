@@ -50,7 +50,7 @@ class LocationController extends Controller
         );
         $crestresponse = $this->evesso->getResponse($crestrequest);
 
-        $location = $crestresponse->solarSystem->name;
+        $location = $crestresponse['solarSystem']['name'];
         return view('welcome')->with('location', $location);
     }
 }
