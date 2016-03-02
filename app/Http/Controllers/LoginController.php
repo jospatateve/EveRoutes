@@ -66,11 +66,24 @@ class LoginController extends Controller
 
         try {
             $userinfo = $this->evesso->getResourceOwner($token);
+            $user = User::whereId($userinfo->getCharacterId());
 
-            $user = new User;
-            $user->userid = $userinfo->getCharacterId();
-            $user->name = $userinfo->getCharacterName();
-            $user->owner = $userinfo->getCharacterOwnerHash();
+            if (empty($user)) {
+                $user = new User;
+                $user->userid = $userinfo->getCharacterId();
+                $user->name = $userinfo->getCharacterName();
+                $user->owner = $userinfo->getCharacterOwnerHash();
+                $user->save();
+            } else if ($user->owner !== $userinfo->getCharacterOwnerHash()) {
+                // toon was transferred, we need to reset the account
+                $oldroutes = $user->everoutes();
+                foreach ($oldroutes as $oldroute) {
+                    $oldroute->delete();
+                }
+                $user->owner = $userinfo->getCharacterOwnerHash();
+                $user->save();
+                $user = User::whereId($userinfo->getCharacterId());
+            }
 
             Auth::login($user);
 

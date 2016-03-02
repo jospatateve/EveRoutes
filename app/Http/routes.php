@@ -27,8 +27,16 @@ Route::get('/', function () {
 */
 
 Route::group(['middleware' => ['web']], function () {
-    Route::get('login/eveonline', 'LoginController@redirect');
-    Route::get('login/eveonline/callback', 'LoginController@callback');
-    Route::get('logout', 'LoginController@logout');
-    Route::get('location', 'LocationController@location');
+    // handle login/logout
+    Route::get('/login/eveonline', 'LoginController@redirect');
+    Route::get('/login/eveonline/callback', 'LoginController@callback');
+    Route::get('/logout', 'LoginController@logout');
+
+    // system information
+    Route::get('/location', 'LocationController@location');
+
+    // manage eve routes
+    Route::get('/routes', 'RouteController@index');
+    Route::post('/route', 'RouteController@store');
+    Route::delete('/route/{everoute}', 'RouteController@destroy');
 });
