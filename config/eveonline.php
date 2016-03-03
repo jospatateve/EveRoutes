@@ -10,5 +10,6 @@ return [
         'characterNavigationWrite',
     ],
     'crest' => 'https://crest-tq.eveonline.com/',
+    'public-crest' => 'https://public-crest.eveonline.com/',
     'eveserverip' => '',
 ];

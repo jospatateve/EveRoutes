@@ -10,7 +10,7 @@
                     <div class="panel-body">
 					    <!--<pre>{{ json_encode($location, JSON_PRETTY_PRINT) }}</pre>-->
                         <ul>
-                            <li>Name: {{ $location['name'] }}</li>
+                            <li>System: {{ $location['name'] }}</li>
                             <li>Security Status: {{ $location['securityStatus'] }}</li>
                             <li>Sovereignty: {{ $location['sovereignty']['name'] }}</li>
                         </ul>

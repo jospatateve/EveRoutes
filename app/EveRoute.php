@@ -8,7 +8,7 @@ use App\User;
 
 class EveRoute extends Model
 {
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'waypoints'];
 
     public function user()
     {
