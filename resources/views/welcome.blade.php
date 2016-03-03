@@ -1,59 +1,34 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>EveRoutes</title>
+@extends('layouts.app')
 
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
-
-        <style>
-            html, body {
-                height: 100%;
-            }
-
-            body {
-                margin: 0;
-                padding: 0;
-                width: 100%;
-                display: table;
-                font-weight: 100;
-                font-family: 'Lato';
-            }
-
-            .container {
-                text-align: center;
-                display: table-cell;
-                vertical-align: middle;
-            }
-
-            .content {
-                text-align: center;
-                display: inline-block;
-            }
-
-            .title {
-                font-size: 96px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="content">
-                @if (!Auth::check())
-                    <div class="title"><p>Sadew &amp; Jos<br/>Eve Online Project - Route Planner</p></div>
-                    <a href= "{{url('login/eveonline')}}"><img src="{{url('ssologin.png')}}" alt="Login with Eve Online"/></a>
-                @elseif (isset($location))
-                    <div class="title"><p>{{ Auth::user()->name }} @ {{ $location }}</p></div>
+@section('content')
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-default">
+                @if (Session::has('message'))
+                    <div class="panel-heading">Error - Something went wrong</div>
+                    <div class="panel-body">
+                        <p>{{ Session::get('message') }}</p>
+                    </div>
                 @endif
-                @if (isset($message))
-                    <div>
-                        <br/><br/>
-                        <strong>Whoops! Something went wrong!</strong>
+                @if (Auth::guest())
+                    <div class="panel-heading">Welcome - Log in to continue</div>
+                    <div class="panel-body">
+                        <a href= "{{url('/login/eveonline')}}">
+                            <img src="{{url('ssologin.png')}}" alt="Login with Eve Online"/>
+                        </a>
+                    </div>
+                @else
+                    <div class="panel-heading">Welcome</div>
+                    <div class="panel-body">
                         <ul>
-                            <li>{{ $message }}</li>
+                            <li><a href="{{ url('/location') }}">My Location</a></li>
+                            <li><a href="{{ url('/routes') }}">My Routes</a></li>
                         </ul>
                     </div>
                 @endif
             </div>
         </div>
-    </body>
-</html>
+    </div>
+</div>
+@endsection

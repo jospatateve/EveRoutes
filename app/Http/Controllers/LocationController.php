@@ -29,7 +29,7 @@ class LocationController extends Controller
     public function location()
     {
         if (!Session::has('evessotoken')) {
-            return view('welcome')->with('message', 'No sso token provided.');
+            return Redirect('/')->with('message', 'No sso token provided.');
         }
 
         $user = Auth::user();
@@ -50,7 +50,17 @@ class LocationController extends Controller
         );
         $crestresponse = $this->evesso->getResponse($crestrequest);
 
-        $location = $crestresponse['solarSystem']['name'];
-        return view('welcome')->with('location', $location);
+        if (isset($crestresponse['solarSystem'])) {
+            $crestrequest = $this->evesso->getAuthenticatedRequest(
+                'GET',
+                $crestresponse['solarSystem']['href'],
+                $token->getToken()
+            );
+            $crestresponse = $this->evesso->getResponse($crestrequest);
+
+            return view('location.index')->with('location', $crestresponse);
+        }
+
+        return view('location.index');
     }
 }

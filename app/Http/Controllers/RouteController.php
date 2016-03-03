@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use App\EveRoute;
+use App\Repositories\EveRouteRepository;
+
 class RouteController extends Controller
 {
     protected $everoutes;
@@ -40,6 +43,6 @@ class RouteController extends Controller
     {
         $this->authorize('destroy', $everoute);
         $everoute->delete();
-        return redirect('/everoutes');
+        return redirect('/routes');
     }
 }

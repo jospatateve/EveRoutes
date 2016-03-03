@@ -12,9 +12,11 @@ class CreateEveroutesTable extends Migration
      */
     public function up()
     {
-        Schema::create('everoutes', function (Blueprint $table) {
+        Schema::create('eve_routes', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->index();
             $table->string('name');
+            $table->string('waypoints');
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ class CreateEveroutesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('everoutes');
+        Schema::drop('eve_routes');
     }
 }
