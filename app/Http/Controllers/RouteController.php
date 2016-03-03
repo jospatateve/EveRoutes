@@ -30,10 +30,29 @@ class RouteController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|max:255',
+            //'waypoints' => 'required'
         ]);
 
         $request->user()->everoutes()->create([
             'name' => $request->name,
+            //'waypoints' => $request->waypoints
+        ]);
+
+        return redirect('/routes');
+    }
+
+    public function update(Request $request, EveRoute $everoute)
+    {
+        $this->validate($request, [
+            'name' => 'required|max:255',
+            //'waypoints' => 'required'
+        ]);
+
+        $this->authorize($everoute);
+
+        $everoute->update([
+            'name' => $request->name,
+            //'waypoints' => $request->waypoints
         ]);
 
         return redirect('/routes');
@@ -41,7 +60,7 @@ class RouteController extends Controller
 
     public function destroy(Request $request, EveRoute $everoute)
     {
-        $this->authorize('destroy', $everoute);
+        $this->authorize($everoute);
         $everoute->delete();
         return redirect('/routes');
     }

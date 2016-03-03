@@ -8,7 +8,12 @@
                 @if (isset($location))
                     <div class="panel-heading">My Location - {{ $location['name'] }}</div>
                     <div class="panel-body">
-					    {{ json_encode($location) }}
+					    <!--<pre>{{ json_encode($location, JSON_PRETTY_PRINT) }}</pre>-->
+                        <ul>
+                            <li>Name: {{ $location['name'] }}</li>
+                            <li>Security Status: {{ $location['securityStatus'] }}</li>
+                            <li>Sovereignty: {{ $location['sovereignty']['name'] }}</li>
+                        </ul>
                     </div>
                 @else
                     <div class="panel-heading">My Location</div>

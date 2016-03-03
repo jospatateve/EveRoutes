@@ -57,6 +57,15 @@ class LocationController extends Controller
                 $token->getToken()
             );
             $crestresponse = $this->evesso->getResponse($crestrequest);
+            /*$location['system'] = $crestresponse;
+
+            $crestrequest = $this->evesso->getAuthenticatedRequest(
+                'GET',
+                $location['system']['stats']['href'],
+                $token->getToken()
+            );
+            $crestresponse = $this->evesso->getResponse($crestrequest);
+            $location['stats'] = $crestresponse;*/
 
             return view('location.index')->with('location', $crestresponse);
         }
