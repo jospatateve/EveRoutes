@@ -149,7 +149,7 @@
 @endsection
 
 @section('scripts')
-    $(function()) {
+    $(function() {
         $("#everoute-waypoints").autocomplete({
             source: "/system/autocomplete",
             minLength: 3,
@@ -157,5 +157,5 @@
                 $("#everoute-waypoints").val(ui.item.value);
             }
         });
-    }
+    });
 @endsection
