@@ -15,7 +15,7 @@
                     <div class="panel-heading">Welcome - Log in to continue</div>
                     <div class="panel-body">
                         <a href= "{{url('/login/eveonline')}}">
-                            <img src="{{url('ssologin.png')}}" alt="Login with Eve Online"/>
+                            <img src="{{url('/images/ssologin.png')}}" alt="Login with Eve Online"/>
                         </a>
                     </div>
                 @else

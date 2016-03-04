@@ -12,32 +12,71 @@
                     <!-- Display Validation Errors -->
                     @include('common.errors')
 
-                    <!-- New Task Form -->
-                    <form action="/route" method="POST" class="form-horizontal">
-                        {{ csrf_field() }}
+                    @if (isset($editroute)) 
+                        <!-- Edit Route Form -->
+                        <form action="/route/{{ $editroute->id }}" method="POST" class="form-horizontal">
+                            {{ csrf_field() }}
 
-                        <!-- Task Name -->
-                        <div class="form-group">
-                            <label for="everoute-name" class="col-sm-3 control-label">Name</label>
-
-                            <div class="col-sm-6">
-                                <input type="text" name="name" id="everoute-name" class="form-control" value="{{ old('everoute') }}">
+                            <!-- Route Name -->
+                            <div class="form-group">
+                                <label for="everoute-name" class="col-sm-3 control-label">Name</label>
+                                <div class="col-sm-6">
+                                    <input type="text" name="name" id="everoute-name" class="form-control" value="{{ old('everoute') ?: $editroute->name }}">
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- Add Task Button -->
-                        <div class="form-group">
-                            <div class="col-sm-offset-3 col-sm-6">
-                                <button type="submit" class="btn btn-default">
-                                    <i class="fa fa-btn fa-plus"></i>Add Route
-                                </button>
+                            <!-- Route Waypoints -->
+                            <div class="form-group">
+                                <label for="everoute-waypoints" class="col-sm-3 control-label">Waypoints</label>
+                                <div class="col-sm-6">
+                                    <input type="text" name="waypoints" id="everoute-waypoints" class="form-control" value="{{ old('everoute') ?: $editroute->waypoints }}">
+                                </div>
                             </div>
-                        </div>
-                    </form>
+
+                            <!-- Add Route Button -->
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-6">
+                                    <button type="submit" class="btn btn-default">
+                                        <i class="fa fa-btn fa-plus"></i>Edit Route
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    @else
+                        <!-- New Route Form -->
+                        <form action="/route" method="POST" class="form-horizontal">
+                            {{ csrf_field() }}
+
+                            <!-- Route Name -->
+                            <div class="form-group">
+                                <label for="everoute-name" class="col-sm-3 control-label">Name</label>
+                                <div class="col-sm-6">
+                                    <input type="text" name="name" id="everoute-name" class="form-control" value="{{ old('everoute') }}">
+                                </div>
+                            </div>
+
+                            <!-- Route Waypoints -->
+                            <div class="form-group">
+                                <label for="everoute-waypoints" class="col-sm-3 control-label">Waypoints</label>
+                                <div class="col-sm-6">
+                                    <input type="text" name="waypoints" id="everoute-waypoints" class="form-control" value="{{ old('everoute') }}">
+                                </div>
+                            </div>
+
+                            <!-- Add Route Button -->
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-6">
+                                    <button type="submit" class="btn btn-default">
+                                        <i class="fa fa-btn fa-plus"></i>Add Route
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    @endif
                 </div>
             </div>
 
-            <!-- Current Tasks -->
+            <!-- Current Waypoints -->
             @if (count($everoutes) > 0)
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -57,7 +96,7 @@
 
                                         <!-- Route Load Button -->
                                         <td>
-                                            <form action="/routes/load/{{ $route->id }}" method="GET">
+                                            <form action="/route/{{ $route->id }}/loadwaypoints" method="GET">
                                                 {{ csrf_field() }}
 
                                                 <button type="submit" id="load-everoute-{{ $route->id }}" class="btn">
@@ -68,7 +107,7 @@
 
                                         <!-- Route Edit Button -->
                                         <td>
-                                            <form action="/routes/edit/{{ $route->id }}" method="GET">
+                                            <form action="/route/{{ $route->id }}/edit" method="GET">
                                                 {{ csrf_field() }}
 
                                                 <button type="submit" id="load-everoute-{{ $route->id }}" class="btn">
@@ -107,4 +146,16 @@
             @endif
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    $(function()) {
+        $("#everoute-waypoints").autocomplete({
+            source: "/system/autocomplete",
+            minLength: 3,
+            select: function(event, ui) {
+                $("#everoute-waypoints").val(ui.item.value);
+            }
+        });
+    }
 @endsection

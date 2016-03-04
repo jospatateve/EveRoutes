@@ -3,93 +3,52 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth;
-use Config;
 use Redirect;
-use Session;
 
-use Evelabs\OAuth2\Client\Provider\EveOnline;
-
+use App\EveOnline\EveOAuthProvider;
+use App\EveOnline\EveSSO;
+use App\EveOnline\EveUserFactory;
 use App\User;
 
 class LoginController extends Controller
 {
-    private $evesso;
+    private $eveoauth;
 
     function __construct()
     {
-        $this->evesso = new EveOnline([
-            'clientId'     => Config::get('eveonline.id'),
-            'clientSecret' => Config::get('eveonline.secret'),
-            'redirectUri'  => url(Config::get('eveonline.callback'))
-        ]);
+        $this->eveoauth = new EveOAuthProvider();
     }
 
-    public function redirect()
+    public function redirect(Request $request)
     {
-        $options = [
-            'scope' => Config::get('eveonline.scope')
-        ];
-        $authurl = $this->evesso->getAuthorizationUrl($options);
-
-        Session::set('evessostate', $this->evesso->getState());
-        Session::save();
-
+        $evesso = new EveSSO($this->eveoauth);
+        $authurl = $evesso->getRedirectUrl($request);
         return Redirect::to($authurl);
     }
 
-    public function callback()
+    public function callback(Request $request)
     {
-        if (!Input::has('state')) {
-            return Redirect::to('/')->with('message', 'Unidentified authorization request.');
-        }
-
-        $evessostate = Input::get('state');
-        if (!Session::has('evessostate') || ($evessostate !== Session::get('evessostate'))) {
-            return Redirect::to('/')->with('message', 'Unidentified authorization request.');
-        }
-
-        if (!Input::has('code')) {
-            return Redirect::to('/')->with('message', 'Authorization request failed.');
-        }
-        $code = Input::get('code');
-
-        $token = $this->evesso->getAccessToken('authorization_code', [
-            'code' => $code
-        ]);
-        Session::set('evessotoken', $token);
-        Session::save();
+        $evesso = new EveSSO($this->eveoauth);
 
         try {
-            $userinfo = $this->evesso->getResourceOwner($token);
+            $userinfo = $evesso->getUserInfo($request);
             $user = User::where('userid', '=', $userinfo->getCharacterId())->first();
 
             if (empty($user)) {
-                $user = new User;
-                $user->userid = $userinfo->getCharacterId();
-                $user->name = $userinfo->getCharacterName();
-                $user->owner = $userinfo->getCharacterOwnerHash();
-                $user->save();
-            }/* else if ($user->owner !== $userinfo->getCharacterOwnerHash()) {
-                // toon was transferred, we need to reset the account
-                $oldroutes = $user->everoutes();
-                foreach ($oldroutes as $oldroute) {
-                    $oldroute->delete();
-                }
-                $user->owner = $userinfo->getCharacterOwnerHash();
-                $user->save();
-                $user = User::where('userid', '=', $userinfo->getCharacterId())->first();
-            }*/
+                $user = EveUserFactory::create($userinfo);
+            } else if ($user->owner !== $userinfo->getCharacterOwnerHash()) {
+                // character was transferred to new owner
+                $user = EveUserFactory::reset($user, $userinfo);
+            }
 
             Auth::login($user);
 
-            return Redirect::to('location');
+            return Redirect::to('/location');
         } catch (Exception $e) {
-            return Redirect::to('/')->with('message', 'Failed to fetch user details.');
+            return Redirect::to('/')->with('message', $e->getMessage());
         }
     }
 

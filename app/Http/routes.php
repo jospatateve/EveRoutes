@@ -23,6 +23,7 @@
 */
 
 Route::group(['middleware' => ['web']], function () {
+    // landing page
     Route::get('/', function () {
         return view('welcome');
     });
@@ -37,6 +38,12 @@ Route::group(['middleware' => ['web']], function () {
 
     // manage eve routes
     Route::get('/routes', 'RouteController@index');
+    Route::get('/route/{everoute}/edit', 'RouteController@index_update');
+    Route::get('/route/{everoute}/loadwaypoints', 'RouteController@loadwaypoints');
     Route::post('/route', 'RouteController@store');
+    Route::post('/route/{everoute}', 'RouteController@update');
     Route::delete('/route/{everoute}', 'RouteController@destroy');
+
+    // route for system name autocomplete
+    Route::get('/system/autocomplete', 'SystemController@autocomplete');
 });
