@@ -95,18 +95,4 @@ class EveCREST
         $url = Config::get('eveonline.crest')."characters/$userid/";
         return $this->getRequest($request, $url);
     }
-
-    private function getRequestPublic($url)
-    {
-        $crestrequest = $this->oauth->getOAuth()->getRequest(
-            'GET', $url
-        );
-        return $this->oauth->getOAuth()->getResponse($crestrequest);
-    }
-
-    public function getSystems()
-    {
-        $url = Config::get('eveonline.public-crest').'solarsystems/';
-        return $this->getRequestPublic($url);
-    }
 }

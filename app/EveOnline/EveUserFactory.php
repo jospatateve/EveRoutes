@@ -1,6 +1,6 @@
 <?php
 
-namespace App\EveOnline
+namespace App\EveOnline;
 
 use App\User;
 

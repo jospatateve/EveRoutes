@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Auth;
 
 use App\EveRoute;
+use App\EveSystem;
 use App\Repositories\EveRouteRepository;
 
 use App\EveOnline\EveOAuthProvider;
@@ -53,6 +54,18 @@ class RouteController extends Controller
         return redirect('/routes');
     }
 
+    private function waypointnamestoidstring(array $waypoints)
+    {
+        $waypointsstring = '';
+
+        foreach ($waypoints as $waypoint) {
+            $system = EveSystem::where('name', '=', $waypoint)->first();
+            $waypointsstring .= $system->systemid . ';';
+        }
+
+        return $waypointsstring;
+    }
+
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -60,11 +73,11 @@ class RouteController extends Controller
             'waypoints' => 'required'
         ]);
 
-        // TODO parse waypoints in correct format
+        $waypoints = $this->waypointnamestoidstring($request->waypoints);
 
         $request->user()->everoutes()->create([
             'name' => $request->name,
-            'waypoints' => $request->waypoints
+            'waypoints' => $waypoints
         ]);
 
         return redirect('/routes');
@@ -79,11 +92,11 @@ class RouteController extends Controller
 
         $this->authorize($everoute);
 
-        // TODO parse waypoints in correct format
+        $waypoints = $this->waypointnamestoidstring($request->waypoints);
 
         $everoute->update([
             'name' => $request->name,
-            'waypoints' => $request->waypoints
+            'waypoints' => $waypoints
         ]);
 
         return redirect('/routes');

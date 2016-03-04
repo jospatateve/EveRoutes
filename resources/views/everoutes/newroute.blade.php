@@ -14,7 +14,7 @@
     <div class="form-group">
         <label for="everoute-waypoints" class="col-sm-3 control-label">Waypoints</label>
         <div class="col-sm-6">
-            <input type="text" name="waypoints" id="everoute-waypoints" class="form-control" value="{{ old('everoute') }}">
+            <input type="text" name="waypoints[]" id="everoute-waypoints" class="form-control" value="{{ old('everoute') }}">
         </div>
     </div>
 
