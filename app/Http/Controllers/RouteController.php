@@ -32,13 +32,29 @@ class RouteController extends Controller
         ]);
     }
 
+    private function idstringtowaypoints($idstring)
+    {
+        $waypoints = [];
+
+        $ids = explode(';', $everoute->waypoints);
+        foreach ($ids as $id) {
+            $system = EveSystem::where('system_id', '=', $id)->first();
+            $waypoints[] = $system->name;
+        }
+
+        return $waypoints;
+    }
+
     public function index_update(Request $request, EveRoute $everoute)
     {
         $this->authorize('update', $everoute);
 
+        $waypoints = $this->idstringtowaypoints($everoute->waypoints);
+
         return view('everoutes.index', [
             'everoutes' => $this->everoutes->forUser($request->user()),
-            'editroute' => $everoute
+            'editroute' => $everoute->name,
+            'editroutewaypoints' => $waypoints
         ]);
     }
 

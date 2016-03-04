@@ -13,9 +13,10 @@
     <!-- Route Waypoints -->
     <div class="form-group">
         <label for="everoute-waypoints" class="col-sm-3 control-label">Waypoints</label>
-        <div class="col-sm-6">
+        <div class="col-sm-6" id="dynamic_waypoint">
             <input type="text" name="waypoints[]" id="everoute-waypoints" class="form-control" value="{{ old('everoute') }}">
         </div>
+        <input type="button" class="btn btn-default" id="remove_system_name" value="+">
     </div>
 
     <!-- Add Route Button -->
