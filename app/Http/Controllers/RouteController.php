@@ -60,7 +60,7 @@ class RouteController extends Controller
 
         foreach ($waypoints as $waypoint) {
             $system = EveSystem::where('name', '=', $waypoint)->first();
-            $waypointsstring .= $system->systemid . ';';
+            $waypointsstring .= $system->system_id . ';';
         }
 
         return $waypointsstring;
