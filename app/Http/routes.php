@@ -46,4 +46,7 @@ Route::group(['middleware' => ['web']], function () {
 
     // route for system name autocomplete
     Route::get('/system/autocomplete', 'SystemController@autocomplete');
+
+    // user profile
+    Route::get('/profile', 'ProfileController@index');
 });

@@ -60,6 +60,8 @@ class RouteController extends Controller
             'waypoints' => 'required'
         ]);
 
+        // TODO parse waypoints in correct format
+
         $request->user()->everoutes()->create([
             'name' => $request->name,
             'waypoints' => $request->waypoints
@@ -76,6 +78,8 @@ class RouteController extends Controller
         ]);
 
         $this->authorize($everoute);
+
+        // TODO parse waypoints in correct format
 
         $everoute->update([
             'name' => $request->name,

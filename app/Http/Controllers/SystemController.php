@@ -16,7 +16,7 @@ class SystemController extends Controller
 
         $results = [];
 
-        $systems = EveSystem::where('name', 'LIKE', '%'.$term.'%')->take(5)->get();
+        $systems = EveSystem::where('name', 'LIKE', $term.'%')->take(5)->get();
         foreach ($systems as $system) {
             $results[] = [
                 'id' => $system->id,

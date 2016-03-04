@@ -2,25 +2,17 @@
 
 use Illuminate\Database\Seeder;
 
+use App\EveOnline\EveOAuthProvider;
+use App\EveOnline\EveCREST;
 use App\EveSystem;
-
-use Evelabs\OAuth2\Client\Provider\EveOnline;
 
 class EveSystemsTableSeeder extends Seeder
 {
     private function getEveSystemsCREST()
     {
-        $evesso = new EveOnline([
-            'clientId'     => Config::get('eveonline.id'),
-            'clientSecret' => Config::get('eveonline.secret'),
-            'redirectUri'  => url(Config::get('eveonline.callback'))
-        ]);
-
-        $crestrequest = $evesso->getRequest(
-            'GET',
-            Config::get('eveonline.public-crest').'solarsystems/'
-        );
-        $crestresponse = $evesso->getResponse($crestrequest);
+        $eveoauth = new EveOAuthProvider();
+        $evecrest = new EveCREST($eveoauth);
+        $crestresponse = $evecrest->getSystems();
         return $crestresponse['items'];
     }
 

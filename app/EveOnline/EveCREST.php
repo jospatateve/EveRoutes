@@ -51,7 +51,7 @@ class EveCREST
 
     public function getLocation(Request $request, $userid)
     {
-        $url = Config::get('eveonline.crest').'characters/'.$userid.'/location/';
+        $url = Config::get('eveonline.crest')."characters/$userid/location/";
         return $this->getRequest($request, $url);
     }
 
@@ -69,14 +69,14 @@ class EveCREST
     {
         $waypoint_json[] = [
             'solarSystem' => [
-                'href' => Config::get('eveonline.crest').'solarsystems/'.$waypoint.'/',
+                'href' => Config::get('eveonline.crest')."solarsystems/$waypoint/",
                 'id' => $waypoint
             ],
             'first' => false,
             'clearOtherwaypoints' => $reset
         ];
 
-        $url = Config::get('eveonline.crest').'characters/'.$userid.'/navigation/waypoints/';
+        $url = Config::get('eveonline.crest')."characters/$userid/navigation/waypoints/";
 
         return $this->postRequest($request, $url, json_encode($waypoint_json));
     }
@@ -88,5 +88,25 @@ class EveCREST
             $this->setWaypoint($request, $userid, $waypoint, $reset);
             $reset = false;
         }
+    }
+
+    public function getUserInfo(Request $request, $userid)
+    {
+        $url = Config::get('eveonline.crest')."characters/$userid/";
+        return $this->getRequest($request, $url);
+    }
+
+    private function getRequestPublic($url)
+    {
+        $crestrequest = $this->oauth->getOAuth()->getRequest(
+            'GET', $url
+        );
+        return $this->oauth->getOAuth()->getResponse($crestrequest);
+    }
+
+    public function getSystems()
+    {
+        $url = Config::get('eveonline.public-crest').'solarsystems/';
+        return $this->getRequestPublic($url);
     }
 }
