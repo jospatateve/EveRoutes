@@ -8,6 +8,7 @@ use Auth;
 
 use App\EveRoute;
 use App\EveSystem;
+use App\EveWaypointList;
 use App\Repositories\EveRouteRepository;
 
 use App\EveOnline\EveOAuthProvider;
@@ -32,28 +33,15 @@ class RouteController extends Controller
         ]);
     }
 
-    private function idstringtowaypoints($idstring)
-    {
-        $waypoints = [];
-
-        $ids = explode(';', $everoute->waypoints);
-        foreach ($ids as $id) {
-            $system = EveSystem::where('system_id', '=', $id)->first();
-            $waypoints[] = $system->name;
-        }
-
-        return $waypoints;
-    }
-
     public function index_update(Request $request, EveRoute $everoute)
     {
         $this->authorize('update', $everoute);
 
-        $waypoints = $this->idstringtowaypoints($everoute->waypoints);
+        $waypoints = EveWaypointList::fromString($everoute->waypoints)->toArray();
 
         return view('everoutes.index', [
             'everoutes' => $this->everoutes->forUser($request->user()),
-            'editroute' => $everoute->name,
+            'editroute' => $everoute,
             'editroutewaypoints' => $waypoints
         ]);
     }
@@ -62,24 +50,13 @@ class RouteController extends Controller
     {
         $this->authorize($everoute);
 
-        $waypoints = explode(';', $everoute->waypoints);
+        $waypointsraw = explode(';', $everoute->waypoints);
+        $waypoints = array_filter($waypointsraw, 'strlen');
 
         $evecrest = new EveCREST($this->eveoauth);
         $evecrest->setWaypoints($request, Auth::user()->userid, $waypoints);
 
         return redirect('/routes');
-    }
-
-    private function waypointnamestoidstring(array $waypoints)
-    {
-        $waypointsstring = '';
-
-        foreach ($waypoints as $waypoint) {
-            $system = EveSystem::where('name', '=', $waypoint)->first();
-            $waypointsstring .= $system->system_id . ';';
-        }
-
-        return $waypointsstring;
     }
 
     public function store(Request $request)
@@ -89,7 +66,7 @@ class RouteController extends Controller
             'waypoints' => 'required'
         ]);
 
-        $waypoints = $this->waypointnamestoidstring($request->waypoints);
+        $waypoints = EveWaypointList::fromArray($request->waypoints)->toString();
 
         $request->user()->everoutes()->create([
             'name' => $request->name,
