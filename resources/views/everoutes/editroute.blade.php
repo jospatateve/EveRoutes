@@ -12,10 +12,13 @@
 
     <!-- Route Waypoints -->
     <div class="form-group">
-        <label for="everoute-waypoints" class="col-sm-3 control-label">Waypoints</label>
         @foreach ($editroutewaypoints as $waypoint)
-            <div class="col-sm-6">
-                <input type="text" name="waypoints[]" id="everoute-waypoints-{{ $waypoint }}" class="form-control" value="{{ old('everoute') ?: $waypoint }}">
+	        <div id="waypoint-form-">
+                <label for="everoute-waypoints-{{ $waypoint }}" class="col-sm-3 control-label">Waypoints</label>
+                <div class="col-sm-6">
+                    <input type="text" name="waypoints[]" id="everoute-waypoints-{{ $waypoint }}" class="form-control" value="{{ old('everoute') ?: $waypoint }}">
+                </div>
+                <input type="button" class="btn btn-default" id="add_system_name" value="+">
             </div>
         @endforeach
     </div>
