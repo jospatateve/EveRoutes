@@ -9,10 +9,12 @@ use Config;
 class EveCREST
 {
     private $oauth;
+    private $crest;
 
     function __construct(EveOAuthProviderInterface $oauth)
     {
         $this->oauth = $oauth;
+        $this->crest = Config::get('eveonline.crest');
     }
 
     private function getOrUpdateToken(Request $request)
@@ -51,7 +53,7 @@ class EveCREST
 
     public function getLocation(Request $request, $userid)
     {
-        $url = Config::get('eveonline.crest')."characters/$userid/location/";
+        $url = $this->crest . "characters/$userid/location/";
         return $this->getRequest($request, $url);
     }
 
@@ -69,15 +71,14 @@ class EveCREST
     {
         $waypoint_json[] = [
             'solarSystem' => [
-                'href' => Config::get('eveonline.crest')."solarsystems/$waypoint/",
+                'href' => $this->crest . "solarsystems/$waypoint/",
                 'id' => $waypoint
             ],
             'first' => false,
             'clearOtherwaypoints' => $reset
         ];
 
-        $url = Config::get('eveonline.crest')."characters/$userid/navigation/waypoints/";
-
+        $url = $this->crest . "characters/$userid/navigation/waypoints/";
         return $this->postRequest($request, $url, json_encode($waypoint_json));
     }
 
@@ -92,7 +93,7 @@ class EveCREST
 
     public function getUserInfo(Request $request, $userid)
     {
-        $url = Config::get('eveonline.crest')."characters/$userid/";
+        $url = $this->crest . "characters/$userid/";
         return $this->getRequest($request, $url);
     }
 }

@@ -85,7 +85,7 @@ class RouteController extends Controller
 
         $this->authorize($everoute);
 
-        $waypoints = $this->waypointnamestoidstring($request->waypoints);
+        $waypoints = EveWaypointList::fromArray($request->waypoints)->toString();
 
         $everoute->update([
             'name' => $request->name,

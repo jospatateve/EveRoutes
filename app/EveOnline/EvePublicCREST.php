@@ -7,10 +7,12 @@ use Config;
 class EvePublicCREST
 {
     private $oauth;
+    private $crest;
 
     function __construct()
     {
         $this->oauth = EveOAuthFactory::create();
+        $this->crest = Config::get('eveonline.public-crest');
     }
 
     private function getRequest($url)
@@ -23,7 +25,6 @@ class EvePublicCREST
 
     public function getSystems()
     {
-        $url = Config::get('eveonline.public-crest').'solarsystems/';
-        return $this->getRequest($url);
+        return $this->getRequest($this->crest . 'solarsystems/');
     }
 }
