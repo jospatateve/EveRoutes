@@ -18,9 +18,9 @@
                 @else
                     <div class="panel-heading">My Location</div>
                     <div class="panel-body">
-                        @if (Session::has('exception'))
+                        @if (isset($exception))
                             <div class="alert alert-danger">
-                                <strong>{{ Session::get('exception') }}</strong>
+                                <strong>{{ $exception }}</strong>
                             </div>
                         @endif
                         <p>Unable to locate {{ Auth::user()->name }}.</p>

@@ -7,9 +7,9 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Information</div>
                 <div class="panel-body">
-                    @if (Session::has('exception'))
+                    @if (isset($exception))
                         <div class="alert alert-danger">
-                            <strong>Failed to get user information ({{ Session::get('exception') }}).</strong>
+                            <strong>Failed to get user information ({{ $exception }}).</strong>
                         </div>
                     @endif
                     @if (isset($userinfo))
