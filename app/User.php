@@ -14,4 +14,13 @@ class User extends Authenticable
     {
         return $this->hasMany(EveRoute::class);
     }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($user) {
+            $user->everoutes()->delete();
+        });
+    }
 }
