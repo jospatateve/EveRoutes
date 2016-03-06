@@ -16,31 +16,27 @@
                         <tr>
                             <td class="table-text"><div>{{ $route->name }}</div></td>
 
-                            <!-- Route Load Button -->
-                            <td>
-                                <form action="/route/{{ $route->id }}/loadwaypoints" method="GET">
+                            <td style="text-align:right">
+                                <!-- Route Load Button -->
+                                <form style="display:inline" action="/route/{{ $route->id }}/loadwaypoints" method="GET">
                                     {{ csrf_field() }}
 
-                                    <button type="submit" id="load-everoute-{{ $route->id }}" class="btn">
-                                        <i class="fa fa-btn"></i>Load
+                                    <button type="submit" id="load-everoute-{{ $route->id }}" class="btn btn-default">
+                                        <i class="fa fa-btn fa-play"></i>Load
                                     </button>
                                 </form>
-                            </td>
 
-                            <!-- Route Edit Button -->
-                            <td>
-                                <form action="/route/{{ $route->id }}/edit" method="GET">
+                                <!-- Route Edit Button -->
+                                <form style="display:inline" action="/route/{{ $route->id }}/edit" method="GET">
                                     {{ csrf_field() }}
 
-                                    <button type="submit" id="load-everoute-{{ $route->id }}" class="btn">
-                                        <i class="fa fa-btn"></i>Edit
+                                    <button type="submit" id="load-everoute-{{ $route->id }}" class="btn btn-default">
+                                        <i class="fa fa-btn fa-edit"></i>Edit
                                     </button>
                                 </form>
-                            </td>
 
-                             <!-- Route Delete Button -->
-                            <td>
-                                <form action="/route/{{ $route->id }}" method="POST">
+                                <!-- Route Delete Button -->
+                                <form style="display:inline" action="/route/{{ $route->id }}" method="POST">
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
 

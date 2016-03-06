@@ -33,11 +33,11 @@
         @endforeach
     </div>
 
-    <!-- Add Route Button -->
+    <!-- Edit Route Button -->
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-6">
             <button type="submit" class="btn btn-default">
-                <i class="fa fa-btn fa-plus"></i>Edit Route
+                <i class="fa fa-btn fa-save"></i>Save Route
             </button>
         </div>
     </div>
