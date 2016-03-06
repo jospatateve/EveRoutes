@@ -34,12 +34,18 @@
 @section('scripts')
     $(function() {
         // Autocomplete
-        $("#everoute-waypoints-").autocomplete({
+        $("[id^=everoute-waypoints-]").autocomplete({
             source: "/system/autocomplete",
             minLength: 1,
             select: function(event, ui) {
                 $("#everoute-waypoints").val(ui.item.value);
             }
+        });
+
+        // Remove waypoint input field button
+        $("[id^=remove_system_name-]").click(function(){
+            // Remove the cloned div
+            $(this).parent().remove();
         });
 
         // Unique index to keep track of waypoint input field count
@@ -72,8 +78,8 @@
 
             // Remove waypoint input field button
             $("#remove_system_name-" + system_name_form_index).click(function(){
-               // Remove the cloned div
-               $(this).parent().remove();
+                // Remove the cloned div
+                $(this).parent().remove();
             });
         });
     });

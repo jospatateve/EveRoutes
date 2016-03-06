@@ -40,7 +40,9 @@ class EveWaypointList
 
         foreach ($this->waypoints as $waypoint) {
             $system = EveSystem::where('name', '=', $waypoint)->first();
-            $waypointsstring .= $system->system_id . ';';
+            if ($system) {
+                $waypointsstring .= $system->system_id . ';';
+            }
         }
 
         return $waypointsstring;
