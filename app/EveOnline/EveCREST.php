@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use Config;
 
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
+
 class EveCREST
 {
     private $oauth;
@@ -41,14 +43,28 @@ class EveCREST
         return $this->oauth->getOAuth()->getResponse($crestrequest);
     }
 
-    private function postRequest(Request $request, $url, $json)
+    private function postRequest(Request $request, $url, $body)
     {
         $token = $this->getOrUpdateToken($request);
 
+        $options = [
+            'headers' => [
+                'Content-Type' => 'application/json'
+            ],
+            'body' => json_encode($body)
+        ];
+
         $crestrequest = $this->oauth->getOAuth()->getAuthenticatedRequest(
-            'POST', $url, $token, [ 'content' => $json ]
+            'POST', $url, $token, $options
         );
-        return $this->oauth->getOAuth()->getResponse($crestrequest);
+
+        try {
+            $this->oauth->getOAuth()->getResponse($crestrequest);
+        } catch (IdentityProviderException $e) {
+            if ($e->getMessage() !== 'OK') {
+                throw $e;
+            }
+        }
     }
 
     public function getLocation(Request $request, $userid)
@@ -69,17 +85,17 @@ class EveCREST
 
     public function setWaypoint(Request $request, $userid, $waypoint, $reset=false)
     {
-        $waypoint_json[] = [
+        $waypoint_json = [
             'solarSystem' => [
                 'href' => $this->crest . "solarsystems/$waypoint/",
-                'id' => $waypoint
+                'id' => (int) $waypoint
             ],
             'first' => false,
-            'clearOtherwaypoints' => $reset
+            'clearOtherWaypoints' => $reset
         ];
 
         $url = $this->crest . "characters/$userid/navigation/waypoints/";
-        return $this->postRequest($request, $url, json_encode($waypoint_json));
+        $this->postRequest($request, $url, $waypoint_json);
     }
 
     public function setWaypoints(Request $request, $userid, $waypoints = [])
