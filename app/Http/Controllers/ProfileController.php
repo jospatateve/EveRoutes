@@ -21,8 +21,12 @@ class ProfileController extends Controller
 
     public function index(Request $request)
     {
-        $evecrest = new EveCREST($this->eveoauth);
-        $userinfo = $evecrest->getUserInfo($request, Auth::user()->userid);
-        return view('profile.index')->with('userinfo', $userinfo);
+        try {
+            $evecrest = new EveCREST($this->eveoauth);
+            $userinfo = $evecrest->getUserInfo($request, Auth::user()->userid);
+            return view('profile.index')->with('userinfo', $userinfo);
+        } catch (Exception $e) {
+            return view('profile.index')->with('exception', $e->getMessage());
+		}
     }
 }

@@ -46,9 +46,9 @@ class LoginController extends Controller
 
             Auth::login($user);
 
-            return Redirect::to('/location');
+            return Redirect::to('/routes');
         } catch (Exception $e) {
-            return Redirect::to('/')->with('message', $e->getMessage());
+            return Redirect::to('/')->with('exception', $e->getMessage());
         }
     }
 

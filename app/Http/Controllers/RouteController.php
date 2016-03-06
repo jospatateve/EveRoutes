@@ -54,9 +54,13 @@ class RouteController extends Controller
         $waypoints = array_filter($waypointsraw, 'strlen');
 
         $evecrest = new EveCREST($this->eveoauth);
-        $evecrest->setWaypoints($request, Auth::user()->userid, $waypoints);
 
-        return redirect('/routes');
+        try {
+            $evecrest->setWaypoints($request, Auth::user()->userid, $waypoints);
+            return redirect('/routes')->with('loadedsuccess', $everoute->name);
+        } catch (Exception $e) {
+            return redirect('/routes')->with('exception', $e->getMessage());
+        }
     }
 
     public function store(Request $request)

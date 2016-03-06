@@ -6,6 +6,17 @@
         </div>
 
         <div class="panel-body">
+            @if (Session::has('loadedsuccess'))
+                <div class="alert alert-success">
+                    <strong>Route "{{ Session::get('loadedsuccess') }}" successfully loaded into EVE.</strong>
+                </div>
+            @endif
+            @if (Session::has('exception'))
+                <div class="alert alert-danger">
+                    <strong>Failed to load route ({{ Session::get('exception') }}).</strong>
+                </div>
+            @endif
+
             <table class="table table-striped task-table">
                  <thead>
                     <th>Route</th>

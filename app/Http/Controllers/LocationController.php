@@ -21,13 +21,17 @@ class LocationController extends Controller
 
     public function location(Request $request)
     {
-        $evecrest = new EveCREST($this->eveoauth);
-        $location = $evecrest->getLocationInfo($request, Auth::user()->userid);
+        try {
+            $evecrest = new EveCREST($this->eveoauth);
+            $location = $evecrest->getLocationInfo($request, Auth::user()->userid);
 
-        if ($location) {
-            return view('location.index')->with('location', $location);
+            if ($location) {
+                return view('location.index')->with('location', $location);
+            }
+
+            return view('location.index');
+        } catch (Exception $e) {
+			return view('location.index')->with('exception', $e->getMessage());
         }
-
-        return view('location.index');
     }
 }

@@ -5,10 +5,12 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                @if (Session::has('message'))
-                    <div class="panel-heading">Error - Something went wrong</div>
+                @if (Session::has('exception'))
+                    <div class="panel-heading">Error</div>
                     <div class="panel-body">
-                        <p>{{ Session::get('message') }}</p>
+                        <div class="alert alert-danger">
+                            <strong>{{ Session::get('exception') }}</strong>
+                        </div>
                     </div>
                 @endif
                 @if (Auth::guest())
@@ -17,7 +19,6 @@
                         <a href= "{{url('/login/eveonline')}}">
                             <img src="{{url('/images/ssologin.png')}}" alt="Login with Eve Online"/>
                         </a>
-                    </div>
                 @else
                     <div class="panel-heading">Welcome</div>
                     <div class="panel-body">

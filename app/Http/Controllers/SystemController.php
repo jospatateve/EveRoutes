@@ -12,7 +12,7 @@ class SystemController extends Controller
 {
     public function autocomplete(Request $request)
     {
-        $term = $request->input('term');
+        $term = $request->input('term') ?: '';
 
         $results = [];
 
