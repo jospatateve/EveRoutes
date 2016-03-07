@@ -12,6 +12,18 @@
 
     <!-- Route Waypoints -->
     <div class="form-group">
+        @if (count($editroutewaypoints) == 0)
+	        <div id="waypoint-form-">
+                <label for="everoute-waypoints-" class="col-sm-3 control-label">Waypoints</label>
+                <div class="col-sm-6">
+                    <input type="text" name="waypoints[]" id="everoute-waypoints-" class="form-control" value="{{ old('everoute') }}">
+                </div>
+                <button type="button" class="btn btn-default" id="add_system_name">
+                    <i class="fa fa-btn fa-plus"></i>
+                </button>
+            </div>
+            <div id="waypoints-form">
+        @endif
         @foreach ($editroutewaypoints as $index => $waypoint)
             @if ($index == 0)
 	            <div id="waypoint-form-">
