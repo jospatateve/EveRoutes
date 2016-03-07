@@ -100,4 +100,8 @@
         display: inline-block;
         cursor: pointer;
     }
+
+    form.inline {
+        display: inline;
+    }
 @endsection
