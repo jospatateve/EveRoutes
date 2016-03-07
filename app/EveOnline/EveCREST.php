@@ -83,14 +83,14 @@ class EveCREST
         return $this->getRequest($request, $location['solarSystem']['href']);
     }
 
-    public function setWaypoint(Request $request, $userid, $waypoint, $reset=false)
+    public function setWaypoint(Request $request, $userid, $waypoint, $first=false, $reset=false)
     {
         $waypoint_json = [
             'solarSystem' => [
                 'href' => $this->crest . "solarsystems/$waypoint/",
                 'id' => (int) $waypoint
             ],
-            'first' => false,
+            'first' => $first,
             'clearOtherWaypoints' => $reset
         ];
 
@@ -102,7 +102,7 @@ class EveCREST
     {
         $reset = true;
         foreach ($waypoints as $waypoint) {
-            $this->setWaypoint($request, $userid, $waypoint, $reset);
+            $this->setWaypoint($request, $userid, $waypoint, $reset, $reset);
             $reset = false;
         }
     }
