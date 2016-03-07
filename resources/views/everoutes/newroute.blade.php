@@ -17,7 +17,9 @@
             <div class="col-sm-6">
                 <input type="text" name="waypoints[]" id="everoute-waypoints-" class="form-control" value="{{ old('everoute') }}">
             </div>
-            <input type="button" class="btn btn-default" id="add_system_name" value="+">
+            <button type="button" class="btn btn-default" id="add_system_name">
+                <i class="fa fa-btn fa-plus"></i>
+            </button>
         </div>
         <div id="waypoints-form">
         </div>

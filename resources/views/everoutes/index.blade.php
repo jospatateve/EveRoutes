@@ -64,11 +64,11 @@
 
             // Update label, input field and delete button
             $("#waypoint-form-" + system_name_form_index).find("label").eq(0).attr("for", "everoute-waypoints-" + system_name_form_index);
-            $("#waypoint-form-" + system_name_form_index).find("label").eq(0).html("");
+            $("#waypoint-form-" + system_name_form_index).find("label").eq(0).html("<span class=\"ui-icon ui-icon-arrowthick-2-n-s\"></span>");
             $("#waypoint-form-" + system_name_form_index).find("input").eq(0).attr("id", "everoute-waypoints-" + system_name_form_index);
             $("#waypoint-form-" + system_name_form_index).find("input").eq(0).val("");
-            $("#waypoint-form-" + system_name_form_index).find("input").eq(1).attr("id", "remove_system_name-" + system_name_form_index);
-            $("#waypoint-form-" + system_name_form_index).find("input").eq(1).attr("value", "-");
+            $("#waypoint-form-" + system_name_form_index).find("button").eq(0).attr("id", "remove_system_name-" + system_name_form_index);
+            $("#waypoint-form-" + system_name_form_index).find("button").eq(0).html("<i class=\"fa fa-btn fa-minus\"></i>");
 
             // Enable autocomplete for new input field
             $("#everoute-waypoints-" + system_name_form_index).autocomplete({
@@ -92,4 +92,12 @@
             return false;
         });
     });
+@endsection
+
+@section('styles')
+    span.ui-icon {
+        background-image: url({{ url('/jquery-ui/images/ui-icons_454545_256x240.png') }});
+        display: inline-block;
+        cursor: pointer;
+    }
 @endsection
