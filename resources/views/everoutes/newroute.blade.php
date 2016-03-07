@@ -6,23 +6,27 @@
     <div class="form-group">
         <label for="everoute-name" class="col-sm-3 control-label">Name</label>
         <div class="col-sm-6">
-            <input type="text" name="name" id="everoute-name" class="form-control" value="{{ old('everoute') }}">
+            <input type="text" name="name" id="everoute-name" class="form-control" value="{{ old('name') }}">
         </div>
     </div>
 
     <!-- Route Waypoints -->
     <div class="form-group">
-	    <div id="waypoint-form-">
-            <label for="everoute-waypoints-" class="col-sm-3 control-label">Waypoints</label>
-            <div class="col-sm-6">
-                <input type="text" name="waypoints[]" id="everoute-waypoints-" class="form-control" value="{{ old('everoute') }}">
+        @if (count(old('waypoints')) > 0)
+            @include('everoutes.oldroute')
+        @else
+	        <div id="waypoint-form-">
+                <label for="everoute-waypoints-" class="col-sm-3 control-label">Waypoints</label>
+                <div class="col-sm-6">
+                    <input type="text" name="waypoints[]" id="everoute-waypoints-" class="form-control" value="">
+                </div>
+                <button type="button" class="btn btn-default" id="add_system_name">
+                    <i class="fa fa-btn fa-plus"></i>
+                </button>
             </div>
-            <button type="button" class="btn btn-default" id="add_system_name">
-                <i class="fa fa-btn fa-plus"></i>
-            </button>
-        </div>
-        <div id="waypoints-form">
-        </div>
+            <div id="waypoints-form">
+            </div>
+        @endif
     </div>
 
     <!-- Add Route Button -->
