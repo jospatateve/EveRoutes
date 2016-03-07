@@ -66,8 +66,8 @@ class RouteController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|max:255',
-            'waypoints' => 'required'
+            'name' => 'required|max:255|unique:eve_routes,name,NULL,id,user_id,'.Auth::user()->id,
+            'waypoints.*' => 'required|distinct|exists:eve_systems,name'
         ]);
 
         $waypoints = EveWaypointList::fromArray($request->waypoints)->toString();
@@ -83,8 +83,8 @@ class RouteController extends Controller
     public function update(Request $request, EveRoute $everoute)
     {
         $this->validate($request, [
-            'name' => 'required|max:255',
-            'waypoints' => 'required'
+            'name' => 'required|max:255|unique:eve_routes,name,'.$everoute->id.',id,user_id,'.Auth::user()->id,
+            'waypoints.*' => 'required|distinct|exists:eve_systems,name'
         ]);
 
         $this->authorize($everoute);
