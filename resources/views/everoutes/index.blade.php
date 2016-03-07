@@ -33,6 +33,9 @@
 
 @section('scripts')
     $(function() {
+        // Drag-drop sort
+        $("#waypoints-form").sortable();
+
         // Autocomplete
         $("[id^=everoute-waypoints-]").autocomplete({
             source: "/system/autocomplete",
@@ -43,7 +46,7 @@
         });
 
         // Remove waypoint input field button
-        $("[id^=remove_system_name-]").click(function(){
+        $("[id^=remove_system_name-]").click(function() {
             // Remove the cloned div
             $(this).parent().remove();
         });
@@ -52,7 +55,7 @@
         var system_name_form_index = 0;
 
 		// Add waypoint input field button
-        $("#add_system_name").click(function(){
+        $("#add_system_name").click(function() {
             // Increment index since a new form is being created
             ++system_name_form_index;
 
@@ -77,10 +80,16 @@
             });
 
             // Remove waypoint input field button
-            $("#remove_system_name-" + system_name_form_index).click(function(){
+            $("#remove_system_name-" + system_name_form_index).click(function() {
                 // Remove the cloned div
                 $(this).parent().remove();
             });
+        });
+
+        // Cancel button
+        $("#cancel-button").click(function() {
+            window.location.href = "{{ url('/routes') }}";
+            return false;
         });
     });
 @endsection

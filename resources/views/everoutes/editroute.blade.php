@@ -11,7 +11,7 @@
     </div>
 
     <!-- Route Waypoints -->
-    <div id="waypoints-form" class="form-group">
+    <div class="form-group">
         @foreach ($editroutewaypoints as $index => $waypoint)
             @if ($index == 0)
 	            <div id="waypoint-form-">
@@ -21,24 +21,27 @@
                     </div>
                     <input type="button" class="btn btn-default" id="add_system_name" value="+">
                 </div>
+                <div id="waypoints-form">
             @else
-	            <div id="waypoints-form-{{ $waypoint }}">
-                    <label for="everoute-waypoints-{{ $waypoint }}" class="col-sm-3 control-label"></label>
-                    <div class="col-sm-6">
-                        <input type="text" name="waypoints[]" id="everoute-waypoints-{{ $waypoint }}" class="form-control" value="{{ old('everoute') ?: $waypoint }}">
+	                <div id="waypoints-form-{{ $waypoint }}-{{ $index }}">
+                        <label for="everoute-waypoints-{{ $waypoint }}-{{ $index }}" class="col-sm-3 control-label"></label>
+                        <div class="col-sm-6">
+                            <input type="text" name="waypoints[]" id="everoute-waypoints-{{ $waypoint }}-{{ $index }}" class="form-control" value="{{ old('everoute') ?: $waypoint }}">
+                        </div>
+                        <input type="button" class="btn btn-default" id="remove_system_name-{{ $waypoint }}-{{ $index }}" value="-">
                     </div>
-                    <input type="button" class="btn btn-default" id="remove_system_name-{{ $waypoint }}" value="-">
-                </div>
             @endif
         @endforeach
+                </div>
     </div>
 
-    <!-- Edit Route Button -->
+    <!-- Edit Route and Cancel Buttons -->
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-6">
             <button type="submit" class="btn btn-default">
                 <i class="fa fa-btn fa-save"></i>Save Route
             </button>
+            <input type="button" class="btn btn-default" id="cancel-button" value="Cancel">
         </div>
     </div>
 </form>
