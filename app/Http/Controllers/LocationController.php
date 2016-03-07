@@ -30,7 +30,7 @@ class LocationController extends Controller
             }
 
             return view('location.index');
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
 			return view('location.index')->with('exception', $e->getMessage());
         }
     }

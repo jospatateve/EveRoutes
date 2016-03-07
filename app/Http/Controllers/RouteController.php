@@ -58,7 +58,7 @@ class RouteController extends Controller
         try {
             $evecrest->setWaypoints($request, Auth::user()->userid, $waypoints);
             return redirect('/routes')->with('loadedsuccess', $everoute->name);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return redirect('/routes')->with('exception', $e->getMessage());
         }
     }

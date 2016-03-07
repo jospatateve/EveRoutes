@@ -29,7 +29,7 @@
 
                             <td style="text-align:right">
                                 <!-- Route Load Button -->
-                                <form class="inline" action="/route/{{ $route->id }}/loadwaypoints" method="GET">
+                                <form class="inline" action="{{ url('/route/'.$route->id.'/loadwaypoints') }}" method="GET">
                                     {{ csrf_field() }}
 
                                     <button type="submit" id="load-everoute-{{ $route->id }}" class="btn btn-default">
@@ -38,7 +38,7 @@
                                 </form>
 
                                 <!-- Route Edit Button -->
-                                <form class="inline" action="/route/{{ $route->id }}/edit" method="GET">
+                                <form class="inline" action="{{ url('/route/'.$route->id.'/edit') }}" method="GET">
                                     {{ csrf_field() }}
 
                                     <button type="submit" id="load-everoute-{{ $route->id }}" class="btn btn-default">
@@ -47,7 +47,7 @@
                                 </form>
 
                                 <!-- Route Delete Button -->
-                                <form class="inline" action="/route/{{ $route->id }}" method="POST">
+                                <form class="inline" action="{{ url('/route/'.$route->id) }}" method="POST">
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
 
