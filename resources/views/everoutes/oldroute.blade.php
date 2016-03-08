@@ -16,7 +16,7 @@
                     <span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
                 </label>
                 <div class="col-sm-6">
-                    <input type="text" name="waypoints[]" id="everoute-waypoints-{{ $waypoint }}-{{ $index }}" class="form-control" value="{{ old('everoute') ?: $waypoint }}">
+                    <input type="text" name="waypoints[]" id="everoute-waypoints-{{ $waypoint }}-{{ $index }}" class="form-control" value="{{ $waypoint }}">
                 </div>
                 <button type="button" class="btn btn-default" id="remove_system_name-{{ $waypoint }}-{{ $index }}">
                     <i class="fa fa-btn fa-minus"></i>

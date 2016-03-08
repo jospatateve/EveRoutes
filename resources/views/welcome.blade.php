@@ -21,6 +21,7 @@
                         <a href= "{{url('/login/eveonline')}}">
                             <img src="{{url('/images/ssologin.png')}}" alt="Login with Eve Online"/>
                         </a>
+                    </div>
                 @else
                     <div class="panel-heading">Welcome</div>
                     <div class="panel-body">
