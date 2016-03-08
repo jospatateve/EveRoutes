@@ -38,11 +38,7 @@
 
         // Autocomplete
         $("[id^=everoute-waypoints-]").autocomplete({
-            source: "/system/autocomplete",
-            minLength: 1,
-            select: function(event, ui) {
-                $("#everoute-waypoints").val(ui.item.value);
-            }
+            source: "/system/autocomplete"
         });
 
         // Remove waypoint input field button
@@ -72,11 +68,7 @@
 
             // Enable autocomplete for new input field
             $("#everoute-waypoints-" + system_name_form_index).autocomplete({
-                source: "/system/autocomplete",
-                minLength: 1,
-                select: function(event, ui) {
-                   $("#everoute-waypoints").val(ui.item.value);
-                }
+                source: "/system/autocomplete"
             });
 
             // Remove waypoint input field button

@@ -72,11 +72,7 @@
     $(function() {
         // Autocomplete
         $("#system-name").autocomplete({
-            source: "/system/autocomplete",
-            minLength: 1,
-            select: function(event, ui) {
-                $("#system-name").val(ui.item.value);
-            }
+            source: "/system/autocomplete"
         });
     });
 @endsection
