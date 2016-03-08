@@ -6,13 +6,12 @@
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
                 @if (isset($location))
-                    <div class="panel-heading">My Location - {{ $location['name'] }}</div>
+                    <div class="panel-heading">My Location - {{ $location->getName() }}</div>
                     <div class="panel-body">
-                        <!--<pre>{{ json_encode($location, JSON_PRETTY_PRINT) }}</pre>-->
                         <ul>
-                            <li>System: {{ $location['name'] }}</li>
-                            <li>Security Status: {{ $location['securityStatus'] }}</li>
-                            <li>Sovereignty: {{ $location['sovereignty']['name'] }}</li>
+                            <li>System: {{ $location->getName() }}</li>
+                            <li>Security Status: {{ $location->getSecurityStatus() }}</li>
+                            <li>Sovereignty: {{ $location->getAlliance() }}</li>
                         </ul>
                     </div>
                 @else

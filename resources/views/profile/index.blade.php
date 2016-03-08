@@ -13,12 +13,15 @@
                         </div>
                     @endif
                     @if (isset($userinfo))
-				        <!--<pre>{{ json_encode($userinfo, JSON_PRETTY_PRINT) }}</pre>-->
+                        <p style="float:left;width:300px">
+                            <img src="{{ $userinfo->getPortrait() }}"/>
+                            <img src="{{ $userinfo->getCorporationLogo() }}"/>
+                        </p>
                         <ul>
-                            <li>Name: {{ $userinfo['name'] }}</li>
-                            <li>Id: {{ $userinfo['id'] }}</li>
-                            <li>Gender: {{ $userinfo['gender'] ? 'male' : 'female' }}</li>
-                            <li>Corporation: {{ $userinfo['corporation']['name'] }}</li>
+                            <li>Name: {{ $userinfo->getName() }}</li>
+                            <li>Id: {{ $userinfo->getId() }}</li>
+                            <li>Gender: {{ $userinfo->getGender() }}</li>
+                            <li>Corporation: {{ $userinfo->getCorporation() }}</li>
                         </ul>
                     @endif
                 </div>

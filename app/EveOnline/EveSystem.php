@@ -1,0 +1,79 @@
+<?php
+
+namespace App\EveOnline;
+
+/*
+ * [
+ *     "stats" => [
+ *         "href" => "https://public-crest.eveonline.com/solarsystems/{id}/stats/"
+ *     ],
+ *     "name" => "{name}",
+ *     "securityStatus" => {security_status},
+ *     "securityClass" => "{security_class}",
+ *     "href" => "https://public-crest.eveonline.com/solarsystems/{id}/",
+ *     "id_str" => "{id}",
+ *     "planets" => [
+ *         ["href" => "https://public-crest.eveonline.com/planets/{planet_id}/"],
+ *         ["href" => "https://public-crest.eveonline.com/planets/{planet_id}/"],
+ *         ...
+ *     ],
+ *     "position" => [
+ *         "y" => {y-coordinate},
+ *         "x" => {x-coordinate},
+ *         "z" => {z-coordinate}
+ *     ],
+ *     "sovereignty" => [
+ *         "id_str" => "{alliance_id}",
+ *         "href" => "https://public-crest.eveonline.com/alliances/{alliance_id}/",
+ *         "id" => {alliance_id},
+ *         "name"=> "{alliance_name}"
+ *     ],
+ *     "constellation" => [
+ *         "href" => "https://public-crest.eveonline.com/constellations/{constellation_id}/",
+ *         "id" => {constellation_id},
+ *         "id_str" => "{constellation_id}"
+ *     ],
+ *     "id" => {id}
+ * ]
+ *
+ */
+
+class EveSystem
+{
+    private $raw;
+
+    function __construct(array $json_system)
+    {
+        $this->raw = $json_system;
+    }
+
+	public function getId()
+    {
+        return $this->raw['id'];
+    }
+
+	public function getName()
+    {
+        return $this->raw['name'];
+    }
+
+	public function getSecurityStatus()
+    {
+        return $this->raw['securityStatus'];
+    }
+
+	public function getAlliance()
+    {
+        return $this->raw['sovereignty']['name'];
+    }
+
+	public function getAllianceId()
+    {
+        return $this->raw['sovereignty']['id'];
+    }
+
+	public function getConstellationId()
+    {
+        return $this->raw['constellation']['id'];
+    }
+}

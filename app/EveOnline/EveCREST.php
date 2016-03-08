@@ -70,17 +70,7 @@ class EveCREST
     public function getLocation(Request $request, $userid)
     {
         $url = $this->crest . "characters/$userid/location/";
-        return $this->getRequest($request, $url);
-    }
-
-    public function getLocationInfo(Request $request, $userid)
-    {
-        $location = $this->getLocation($request, $userid);
-        if (!isset($location['solarSystem'])) {
-            return false;
-        }
-
-        return $this->getRequest($request, $location['solarSystem']['href']);
+        return new EveLocation($this->getRequest($request, $url));
     }
 
     public function setWaypoint(Request $request, $userid, $waypoint, $first=false, $reset=false)
@@ -98,7 +88,7 @@ class EveCREST
         $this->postRequest($request, $url, $waypoint_json);
     }
 
-    public function setWaypoints(Request $request, $userid, $waypoints = [])
+    public function setWaypoints(Request $request, $userid, array $waypoints)
     {
         $reset = true;
         foreach ($waypoints as $waypoint) {
@@ -110,6 +100,6 @@ class EveCREST
     public function getUserInfo(Request $request, $userid)
     {
         $url = $this->crest . "characters/$userid/";
-        return $this->getRequest($request, $url);
+        return new EveUser($this->getRequest($request, $url));
     }
 }

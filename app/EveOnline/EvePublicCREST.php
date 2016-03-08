@@ -27,4 +27,11 @@ class EvePublicCREST
     {
         return $this->getRequest($this->crest . 'solarsystems/');
     }
+
+    public function getSystem($systemid)
+    {
+        return new EveSystem(
+            $this->getRequest($this->crest . "solarsystems/$systemid/")
+        );
+    }
 }
