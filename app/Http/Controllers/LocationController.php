@@ -8,7 +8,6 @@ use Auth;
 
 use App\EveOnline\EveOAuthProvider;
 use App\EveOnline\EveCREST;
-use App\EveOnline\EvePublicCREST;
 
 class LocationController extends Controller
 {
@@ -27,9 +26,7 @@ class LocationController extends Controller
             $location = $evecrest->getLocation($request, Auth::user()->userid);
 
             if ($location->isValid()) {
-                $evepubliccrest = new EvePublicCREST($this->eveoauth);
-                $system = $evepubliccrest->getSystem($location->getId());
-                return view('location.index')->with('location', $system);
+                return redirect()->action('SystemController@search', ['name' => $location->getName()]);
             }
 
             return view('location.index');

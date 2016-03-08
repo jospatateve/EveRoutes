@@ -33,7 +33,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/login/eveonline/callback', 'LoginController@callback');
     Route::get('/logout', 'LoginController@logout');
 
-    // system information
+    // current system information
     Route::get('/location', 'LocationController@location');
 
     // manage eve routes
@@ -44,8 +44,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/route/{everoute}', 'RouteController@update');
     Route::delete('/route/{everoute}', 'RouteController@destroy');
 
-    // route for system name autocomplete
+    // system information
     Route::get('/system/autocomplete', 'SystemController@autocomplete');
+    Route::get('/system', 'SystemController@search');
 
     // user profile
     Route::get('/profile', 'ProfileController@index');

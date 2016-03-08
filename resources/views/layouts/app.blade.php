@@ -56,6 +56,7 @@
 
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{{ url('/system') }}">System Info</a></li>
                     <!-- Links if authenticated -->
                     @if (Auth::check())
                         <li><a href="{{ url('/location') }}">My Location</a></li>
