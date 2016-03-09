@@ -14,7 +14,7 @@
                     @include('common.errors')
 
                     <!-- System Search Form -->
-                    <form action="/system" method="GET" class="form-horizontal">
+                    <form id="search-form" action="/system" method="GET" class="form-horizontal">
                         {{ csrf_field() }}
 
                         <!-- System Name -->
@@ -72,7 +72,12 @@
     $(function() {
         // Autocomplete
         $("#system-name").autocomplete({
-            source: "/system/autocomplete"
+            source: "/system/autocomplete",
+            select: function(event, ui) {
+                $(this).val(ui.item.value);
+                $("#search-form").submit();
+                return false;
+            }
         });
     });
 @endsection

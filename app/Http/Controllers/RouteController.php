@@ -67,7 +67,7 @@ class RouteController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|max:255|unique:eve_routes,name,NULL,id,user_id,'.Auth::user()->id,
-            'waypoints.*' => 'required|distinct|exists:eve_systems,name'
+            'waypoints.*' => 'required|distinct|exists:eve_systems,name|notwh'
         ]);
 
         $waypoints = EveWaypointList::fromArray($request->waypoints)->toString();
@@ -84,7 +84,7 @@ class RouteController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|max:255|unique:eve_routes,name,'.$everoute->id.',id,user_id,'.Auth::user()->id,
-            'waypoints.*' => 'required|distinct|exists:eve_systems,name'
+            'waypoints.*' => 'required|distinct|exists:eve_systems,name|notwh'
         ]);
 
         $this->authorize($everoute);

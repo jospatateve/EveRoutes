@@ -76,6 +76,8 @@ return [
     'timezone'             => 'The :attribute must be a valid zone.',
     'unique'               => 'The :attribute has already been taken.',
     'url'                  => 'The :attribute format is invalid.',
+    'distinct'             => 'The :attribute must be unique.',
+    'notwh'                => 'The :attribute cannot be a wh.',
 
     /*
     |--------------------------------------------------------------------------

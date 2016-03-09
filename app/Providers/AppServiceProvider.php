@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+use Validator;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -13,7 +15,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Validator::extend('notwh', function ($attribute, $value, $parameters, $validator) {
+            return !preg_match('/^(j|J)[0-9]{6}$/', $value);
+        });
     }
 
     /**
