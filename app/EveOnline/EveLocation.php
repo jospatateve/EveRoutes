@@ -8,7 +8,7 @@ namespace App\EveOnline;
  *         "id_str" => "{id}",
  *         "href" => "https://crest-tq.eveonline.com/solarsystems/{id}/",
  *         "id" => {id},
- *         "name" => {name}
+ *         "name" => "{name}"
  *     ]
  * ]
  *

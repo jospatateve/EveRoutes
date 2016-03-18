@@ -26,6 +26,14 @@
                     @endif
                 </div>
             </div>
+            @if (isset($userstats))
+                <div class="panel panel-default">
+                    <div class="panel-heading">Statistics</div>
+                    <div class="panel-body">
+                        <pre>{{ json_encode($userstats->getJSON(), JSON_PRETTY_PRINT) }}</pre>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 </div>

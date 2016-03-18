@@ -55,7 +55,7 @@
                         <ul>
                             <li>System: {{ $system->getName() }}</li>
                             <li>Security Status: {{ $system->getSecurityStatus() }}</li>
-                            <li>Sovereignty: {{ $system->getAlliance() }}</li>
+                            <li>Sovereignty: {{ $system->isWH() ? 'Wormhole' : $system->getAlliance() }}</li>
                         </ul>
                     @else
                         <p>No system info to display.</p>

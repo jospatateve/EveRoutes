@@ -38,7 +38,7 @@
 
         // Autocomplete
         $("[id^=everoute-waypoints-]").autocomplete({
-            source: "/system/autocomplete"
+            source: "{{ url('/system/autocomplete') }}"
         });
 
         // Remove waypoint input field button
@@ -68,7 +68,7 @@
 
             // Enable autocomplete for new input field
             $("#everoute-waypoints-" + system_name_form_index).autocomplete({
-                source: "/system/autocomplete"
+                source: "{{ url('/system/autocomplete') }}"
             });
 
             // Remove waypoint input field button

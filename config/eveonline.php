@@ -8,8 +8,10 @@ return [
         'publicData',
         'characterLocationRead',
         'characterNavigationWrite',
+        'characterStatsRead',
     ],
     'crest' => 'https://crest-tq.eveonline.com/',
     'public-crest' => 'https://public-crest.eveonline.com/',
+    'stats-crest' => 'https://characterstats.tech.ccp.is/v1/',
     'eveserverip' => '',
 ];

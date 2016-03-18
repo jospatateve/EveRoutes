@@ -76,4 +76,9 @@ class EveSystem
     {
         return $this->raw['constellation']['id'];
     }
+
+    public function isWH()
+    {
+        return preg_match('/^(j|J)[0-9]{6}$/', $this->getName()) === 1;
+    }
 }

@@ -23,8 +23,14 @@ class ProfileController extends Controller
     {
         try {
             $evecrest = new EveCREST($this->eveoauth);
+
             $userinfo = $evecrest->getUserInfo($request, Auth::user()->userid);
-            return view('profile.index')->with('userinfo', $userinfo);
+            $userstats = $evecrest->getUserStats($request, Auth::user()->userid);
+
+            return view('profile.index', [
+                'userinfo' => $userinfo,
+                'userstats' => $userstats
+            ]);
         } catch (\Exception $e) {
             return view('profile.index')->with('exception', $e->getMessage());
 		}

@@ -102,4 +102,10 @@ class EveCREST
         $url = $this->crest . "characters/$userid/";
         return new EveUser($this->getRequest($request, $url));
     }
+
+    public function getUserStats(Request $request, $userid)
+    {
+        $url = Config::get('eveonline.stats-crest') . "$userid/";
+        return new EveUserStats($this->getRequest($request, $url));
+    }
 }
