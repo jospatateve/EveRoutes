@@ -4,22 +4,19 @@ namespace App\EveOnline;
 
 /*
  * [
- *     json format here
+ *     "aggregateYears" => [
+ *         "year" => [ {array of statistics key-value pairs} ]
+ *     ]
  * ]
  *
  */
 
-class EveUserStats
+class EveUserStats extends EveCRESTResponse
 {
-    private $raw;
-
-    function __construct(array $json_user)
+    public function getYearlyStats()
     {
-        $this->raw = $json_user;
-    }
-
-    public function getJSON()
-    {
-        return $this->raw;
+        return array_map(function($yearstats) {
+            return new EveYearlyStats($yearstats);
+        }, $this->get('aggregateYears'));
     }
 }

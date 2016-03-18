@@ -14,27 +14,20 @@ namespace App\EveOnline;
  *
  */
 
-class EveLocation
+class EveLocation extends EveCRESTResponse
 {
-    private $raw;
-
-    function __construct(array $json_location = null)
-    {
-        $this->raw = $json_location;
-    }
-
     public function isValid()
     {
-        return isset($this->raw['solarSystem']);
+        return $this->has('solarSystem');
     }
 
     public function getId()
     {
-        return $this->raw['solarSystem']['id'];
+        return $this->get('solarSystem')['id'];
     }
 
     public function getName()
     {
-        return $this->raw['solarSystem']['name'];
+        return $this->get('solarSystem')['name'];
     }
 }

@@ -102,47 +102,40 @@ namespace App\EveOnline;
  *
  */
 
-class EveUser
+class EveUser extends EveCRESTResponse
 {
-    private $raw;
-
-    function __construct(array $json_user)
-    {
-        $this->raw = $json_user;
-    }
-
     public function getId()
     {
-        return $this->raw['id'];
+        return $this->get('id');
     }
 
     public function getName()
     {
-        return $this->raw['name'];
+        return $this->get('name');
     }
 
     public function getGender()
     {
-        return $this->raw['gender'] ? 'male' : 'female';
+        return $this->get('gender') ? 'male' : 'female';
     }
 
     public function getCorporation()
     {
-        return $this->raw['corporation']['name'];
+        return $this->get('corporation')['name'];
     }
 
     public function getCorporationId()
     {
-        return $this->raw['corporation']['id'];
+        return $this->get('corporation')['id'];
     }
 
     public function getPortrait()
     {
-        return $this->raw['portrait']['128x128']['href'];
+        return $this->get('portrait')['128x128']['href'];
     }
 
     public function getCorporationLogo()
     {
-        return $this->raw['corporation']['logo']['128x128']['href'];
+        return $this->get('corporation')['logo']['128x128']['href'];
     }
 }

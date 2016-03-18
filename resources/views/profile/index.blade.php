@@ -28,13 +28,29 @@
             </div>
             @if (isset($userstats))
                 <div class="panel panel-default">
-                    <div class="panel-heading">Statistics</div>
+                    <div class="panel-heading">Yearly Statistics</div>
                     <div class="panel-body">
-                        <pre>{{ json_encode($userstats->getJSON(), JSON_PRETTY_PRINT) }}</pre>
+                        <div id="yearlystats">
+                            @foreach ($userstats->getYearlyStats() as $year => $yearstats)
+                                <h3>{{ $year }}</h3>
+                                <div>
+                                    <pre>{{ json_encode($yearstats->getJSON(), JSON_PRETTY_PRINT) }}</pre>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             @endif
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+$(function() {
+    $("#yearlystats").accordion({
+        collapsible: true,
+        active: false
+    });
+});
 @endsection

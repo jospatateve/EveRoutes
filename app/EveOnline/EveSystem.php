@@ -38,43 +38,36 @@ namespace App\EveOnline;
  *
  */
 
-class EveSystem
+class EveSystem extends EveCRESTResponse
 {
-    private $raw;
-
-    function __construct(array $json_system)
-    {
-        $this->raw = $json_system;
-    }
-
 	public function getId()
     {
-        return $this->raw['id'];
+        return $this->get('id');
     }
 
 	public function getName()
     {
-        return $this->raw['name'];
+        return $this->get('name');
     }
 
 	public function getSecurityStatus()
     {
-        return $this->raw['securityStatus'];
+        return $this->get('securityStatus');
     }
 
 	public function getAlliance()
     {
-        return $this->raw['sovereignty']['name'];
+        return $this->get('sovereignty')['name'];
     }
 
 	public function getAllianceId()
     {
-        return $this->raw['sovereignty']['id'];
+        return $this->get('sovereignty')['id'];
     }
 
 	public function getConstellationId()
     {
-        return $this->raw['constellation']['id'];
+        return $this->get('constellation')['id'];
     }
 
     public function isWH()
