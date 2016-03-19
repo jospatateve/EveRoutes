@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Auth;
+use Validator;
 
 use App\EveRoute;
 use App\EveSystem;
@@ -71,13 +72,24 @@ class RouteController extends Controller
         ]);
 
         $waypoints = EveWaypointList::fromArray($request->waypoints)->toString();
-
         $request->user()->everoutes()->create([
             'name' => $request->name,
             'waypoints' => $waypoints
         ]);
 
         return redirect('/routes');
+    }
+
+    public function paste(Request $request)
+    {
+        $waypointsdump = $request->waypointsdump ?: '';
+        $waypointsraw = preg_split(
+            '/\n|\r|\,|\s/', $waypointsdump,
+            -1, PREG_SPLIT_NO_EMPTY
+	    ) ?: [''];
+
+        $request->merge(['waypoints' => $waypointsraw]);
+        return $this->store($request);
     }
 
     public function update(Request $request, EveRoute $everoute)
@@ -90,7 +102,6 @@ class RouteController extends Controller
         $this->authorize($everoute);
 
         $waypoints = EveWaypointList::fromArray($request->waypoints)->toString();
-
         $everoute->update([
             'name' => $request->name,
             'waypoints' => $waypoints

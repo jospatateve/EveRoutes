@@ -33,6 +33,9 @@
 
 @section('scripts')
     $(function() {
+        // Direct input / paste form tabs
+        $("#formtabs").tabs();
+
         // Drag-drop sort
         $("#waypoints-form").sortable();
 

@@ -11,7 +11,7 @@ class EveCRESTResponse
         $this->raw = $json;
     }
 
-    protected function get($key)
+    public function get($key)
     {
         if (!$this->has($key)) {
             throw new \Exception('invalid key');
@@ -19,7 +19,7 @@ class EveCRESTResponse
         return $this->raw[$key];
     }
 
-    protected function has($key)
+    public function has($key)
     {
         return array_key_exists($key, $this->getJSON());
     }

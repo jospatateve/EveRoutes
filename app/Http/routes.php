@@ -41,6 +41,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/route/{everoute}/edit', 'RouteController@index_update');
     Route::get('/route/{everoute}/loadwaypoints', 'RouteController@loadwaypoints');
     Route::post('/route', 'RouteController@store');
+    Route::post('/route/paste', 'RouteController@paste');
     Route::post('/route/{everoute}', 'RouteController@update');
     Route::delete('/route/{everoute}', 'RouteController@destroy');
 
