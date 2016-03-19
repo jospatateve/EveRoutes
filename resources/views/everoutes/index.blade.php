@@ -65,6 +65,7 @@
             $("#waypoint-form-" + system_name_form_index).find("label").eq(0).attr("for", "everoute-waypoints-" + system_name_form_index);
             $("#waypoint-form-" + system_name_form_index).find("label").eq(0).html("<span class=\"ui-icon ui-icon-arrowthick-2-n-s\"></span>");
             $("#waypoint-form-" + system_name_form_index).find("input").eq(0).attr("id", "everoute-waypoints-" + system_name_form_index);
+            $("#waypoint-form-" + system_name_form_index).find("input").eq(0).removeClass("input-error");
             $("#waypoint-form-" + system_name_form_index).find("input").eq(0).val("");
             $("#waypoint-form-" + system_name_form_index).find("button").eq(0).attr("id", "remove_system_name-" + system_name_form_index);
             $("#waypoint-form-" + system_name_form_index).find("button").eq(0).html("<i class=\"fa fa-btn fa-minus\"></i>");
@@ -98,5 +99,9 @@
 
     form.inline {
         display: inline;
+    }
+
+    .input-error {
+        border-color: #a94442;
     }
 @endsection

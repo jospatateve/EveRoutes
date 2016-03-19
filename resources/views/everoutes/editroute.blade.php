@@ -6,7 +6,7 @@
     <div class="form-group">
         <label for="everoute-name" class="col-sm-3 control-label">Name</label>
         <div class="col-sm-6">
-            <input type="text" name="name" id="everoute-name" class="form-control" value="{{ old('name') ?: $editroute->name }}">
+            <input type="text" name="name" id="everoute-name" class="form-control {{ $errors->has('name') ? 'input-error' : ''}}" value="{{ old('name') ?: $editroute->name }}">
         </div>
     </div>
 
@@ -18,7 +18,7 @@
             <div id="waypoint-form-">
                 <label for="everoute-waypoints-" class="col-sm-3 control-label">Waypoints</label>
                 <div class="col-sm-6">
-                    <input type="text" name="waypoints[]" id="everoute-waypoints-" class="form-control" value="">
+                    <input type="text" name="waypoints[]" id="everoute-waypoints-" class="form-control {{ $errors->has('waypoints.'.$index) ? 'input-error' : ''}}" value="">
                 </div>
                 <button type="button" class="btn btn-default" id="add_system_name">
                     <i class="fa fa-btn fa-plus"></i>
@@ -31,7 +31,7 @@
 	                <div id="waypoint-form-">
                         <label for="everoute-waypoints-" class="col-sm-3 control-label">Waypoints</label>
                         <div class="col-sm-6">
-                            <input type="text" name="waypoints[]" id="everoute-waypoints-" class="form-control" value="{{ $waypoint }}">
+                            <input type="text" name="waypoints[]" id="everoute-waypoints-" class="form-control {{ $errors->has('waypoints.'.$index) ? 'input-error' : ''}}" value="{{ $waypoint }}">
                         </div>
                         <button type="button" class="btn btn-default" id="add_system_name">
                             <i class="fa fa-btn fa-plus"></i>
