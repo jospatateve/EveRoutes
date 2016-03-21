@@ -65,15 +65,15 @@
             $("#waypoint-form-" + system_name_form_index + " > label")
                 .attr("for", "everoute-waypoints-" + system_name_form_index)
                 .html("<span class=\"ui-icon ui-icon-arrowthick-2-n-s\"></span>");
-            $("#waypoint-form-" + system_name_form_index + " > input")
+            $("#waypoint-form-" + system_name_form_index + " > div > input")
                 .attr("id", "everoute-waypoints-" + system_name_form_index)
                 .removeClass("input-error")
                 .val("");
             $("#waypoint-form-" + system_name_form_index + " > button")
-                .attr("id", "remove_system_name-" + system_name_form_index);
-            $("#waypoint-form-" + system_name_form_index + " > button > i")
-                .removeClass("fa-plus")
-                .addClass("fa-minus");
+                .attr("id", "remove_system_name-" + system_name_form_index)
+                .children()
+                    .removeClass("fa-plus")
+                    .addClass("fa-minus");
 
             // Enable autocomplete for new input field
             $("#everoute-waypoints-" + system_name_form_index).autocomplete({
