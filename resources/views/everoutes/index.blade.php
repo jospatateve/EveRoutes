@@ -62,13 +62,18 @@
             $("#waypoint-form-").clone().attr("id", "waypoint-form-" + system_name_form_index).appendTo("#waypoints-form");
 
             // Update label, input field and delete button
-            $("#waypoint-form-" + system_name_form_index).find("label").eq(0).attr("for", "everoute-waypoints-" + system_name_form_index);
-            $("#waypoint-form-" + system_name_form_index).find("label").eq(0).html("<span class=\"ui-icon ui-icon-arrowthick-2-n-s\"></span>");
-            $("#waypoint-form-" + system_name_form_index).find("input").eq(0).attr("id", "everoute-waypoints-" + system_name_form_index);
-            $("#waypoint-form-" + system_name_form_index).find("input").eq(0).removeClass("input-error");
-            $("#waypoint-form-" + system_name_form_index).find("input").eq(0).val("");
-            $("#waypoint-form-" + system_name_form_index).find("button").eq(0).attr("id", "remove_system_name-" + system_name_form_index);
-            $("#waypoint-form-" + system_name_form_index).find("button").eq(0).html("<i class=\"fa fa-btn fa-minus\"></i>");
+            $("#waypoint-form-" + system_name_form_index + " > label")
+                .attr("for", "everoute-waypoints-" + system_name_form_index)
+                .html("<span class=\"ui-icon ui-icon-arrowthick-2-n-s\"></span>");
+            $("#waypoint-form-" + system_name_form_index + " > input")
+                .attr("id", "everoute-waypoints-" + system_name_form_index)
+                .removeClass("input-error")
+                .val("");
+            $("#waypoint-form-" + system_name_form_index + " > button")
+                .attr("id", "remove_system_name-" + system_name_form_index);
+            $("#waypoint-form-" + system_name_form_index + " > button > i")
+                .removeClass("fa-plus")
+                .addClass("fa-minus");
 
             // Enable autocomplete for new input field
             $("#everoute-waypoints-" + system_name_form_index).autocomplete({
@@ -103,5 +108,6 @@
 
     .input-error {
         border-color: #a94442;
+        box-shadow: 0 0 5px #a94442;
     }
 @endsection

@@ -1,6 +1,6 @@
 <div id="formtabs">
     <ul>
-        <li><a href="#directinputform">Direct Input</a></li>
+        <li><a href="#directinputform">Manual Input</a></li>
         <li><a href="#pasteform">Paste Waypoints</a></li>
     </ul>
     <div id="directinputform">

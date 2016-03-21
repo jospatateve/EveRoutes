@@ -14,7 +14,7 @@ class EveCRESTResponse
     public function get($key)
     {
         if (!$this->has($key)) {
-            throw new \Exception('invalid key');
+            throw new \Exception("Invalid index: '$key'");
         }
         return $this->raw[$key];
     }

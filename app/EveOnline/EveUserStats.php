@@ -5,7 +5,7 @@ namespace App\EveOnline;
 /*
  * [
  *     "aggregateYears" => [
- *         "year" => [ {array of statistics key-value pairs} ]
+ *         {year} => [ {array of statistics key-value pairs} ]
  *     ]
  * ]
  *

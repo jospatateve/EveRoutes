@@ -54,7 +54,7 @@
                     @if (isset($system)) 
                         <ul>
                             <li>System: {{ $system->getName() }}</li>
-                            <li>Security Status: {{ $system->getSecurityStatus() }}</li>
+                            <li>Security Status: {{ number_format($system->getSecurityStatus(), 2) }}</li>
                             <li>Sovereignty: {{ $system->isWH() ? 'Wormhole' : $system->getAlliance() }}</li>
                         </ul>
                     @else

@@ -106,6 +106,12 @@ class EveCREST
     public function getUserStats(Request $request, $userid)
     {
         $url = Config::get('eveonline.stats-crest') . "$userid/";
-        return new EveUserStats($this->getRequest($request, $url));
+        $stats = new EveUserStats($this->getRequest($request, $url));
+
+        if (!$stats->has('aggregateYears')) {
+            throw new EveCRESTException($stats->get('message'));
+        }
+
+        return $stats;
     }
 }
