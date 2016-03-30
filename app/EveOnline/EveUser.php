@@ -131,11 +131,11 @@ class EveUser extends EveCRESTResponse
 
     public function getPortrait()
     {
-        return $this->get('portrait')['128x128']['href'];
+        return str_replace('http://', 'https://', $this->get('portrait')['128x128']['href']);
     }
 
     public function getCorporationLogo()
     {
-        return $this->get('corporation')['logo']['128x128']['href'];
+        return str_replace('http://', 'https://', $this->get('corporation')['logo']['128x128']['href']);
     }
 }

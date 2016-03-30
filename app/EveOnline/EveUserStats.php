@@ -13,6 +13,16 @@ namespace App\EveOnline;
 
 class EveUserStats extends EveCRESTResponse
 {
+    public function isValid()
+    {
+        return $this->has('aggregateYears');
+    }
+
+    public function getErrorMessage()
+    {
+        return $this->get('message');
+    }
+
     public function getYearlyStats()
     {
         return array_map(function($yearstats) {

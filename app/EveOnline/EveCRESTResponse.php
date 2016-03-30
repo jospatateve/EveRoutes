@@ -11,17 +11,22 @@ class EveCRESTResponse
         $this->raw = $json;
     }
 
+    public function has($key)
+    {
+        return array_key_exists($key, $this->getJSON());
+    }
+
     public function get($key)
     {
         if (!$this->has($key)) {
             throw new \Exception("Invalid index: '$key'");
         }
-        return $this->raw[$key];
+        return $this->getJSON()[$key];
     }
 
-    public function has($key)
+    protected function set($key, $value)
     {
-        return array_key_exists($key, $this->getJSON());
+        $this->raw[$key] = $value;
     }
 
     public function getJSON()

@@ -33,8 +33,28 @@
 
 @section('scripts')
     $(function() {
-        // Direct input / paste form tabs
-        $("#formtabs").tabs();
+        // Paste form dialog
+        $("#pasteformdialog").dialog({
+            dialogClass: "panel panel-default",
+            autoOpen: false,
+            modal: true,
+            minWidth: 400,
+            resizable: false,
+            buttons: [{
+                text: "Ok",
+                click: function() {
+                    $("#pasteform").submit();
+                }
+            },{
+                text: "Cancel",
+                click: function() {
+                    $(this).dialog("close");
+               }
+			}]
+        });
+        $("#pastebutton").click(function() {
+            $("#pasteformdialog").dialog("open");
+		});
 
         // Drag-drop sort
         $("#waypoints-form").sortable();

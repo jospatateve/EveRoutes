@@ -73,14 +73,14 @@ class EveCREST
         return new EveLocation($this->getRequest($request, $url));
     }
 
-    public function setWaypoint(Request $request, $userid, $waypoint, $first=false, $reset=false)
+    public function setWaypoint(Request $request, $userid, $waypoint, $reset=false)
     {
         $waypoint_json = [
             'solarSystem' => [
                 'href' => $this->crest . "solarsystems/$waypoint/",
                 'id' => (int) $waypoint
             ],
-            'first' => $first,
+            'first' => false,
             'clearOtherWaypoints' => $reset
         ];
 
@@ -92,7 +92,7 @@ class EveCREST
     {
         $reset = true;
         foreach ($waypoints as $waypoint) {
-            $this->setWaypoint($request, $userid, $waypoint, $reset, $reset);
+            $this->setWaypoint($request, $userid, $waypoint, $reset);
             $reset = false;
         }
     }
@@ -108,8 +108,8 @@ class EveCREST
         $url = Config::get('eveonline.stats-crest') . "$userid/";
         $stats = new EveUserStats($this->getRequest($request, $url));
 
-        if (!$stats->has('aggregateYears')) {
-            throw new EveCRESTException($stats->get('message'));
+        if (!$stats->isValid()) {
+            throw new EveCRESTException($stats->getErrorMessage());
         }
 
         return $stats;

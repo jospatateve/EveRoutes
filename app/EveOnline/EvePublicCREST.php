@@ -17,21 +17,19 @@ class EvePublicCREST
 
     private function getRequest($url)
     {
-        $crestrequest = $this->oauth->getRequest(
-            'GET', $url
-        );
+        $crestrequest = $this->oauth->getRequest('GET', $url);
         return $this->oauth->getResponse($crestrequest);
     }
 
     public function getSystems()
     {
-        return $this->getRequest($this->crest . 'solarsystems/');
+        $url = $this->crest . 'solarsystems/';
+        return $this->getRequest($url);
     }
 
     public function getSystem($systemid)
     {
-        return new EveSystem(
-            $this->getRequest($this->crest . "solarsystems/$systemid/")
-        );
+        $url = $this->crest . "solarsystems/$systemid/";
+        return new EveSystem($this->getRequest($url));
     }
 }
