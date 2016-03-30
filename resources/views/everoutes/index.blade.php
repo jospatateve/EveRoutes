@@ -91,7 +91,7 @@
                 .val("");
             $("#waypoint-form-" + system_name_form_index + " > button")
                 .attr("id", "remove_system_name-" + system_name_form_index)
-                .children()
+                .children(":first")
                     .removeClass("fa-plus")
                     .addClass("fa-minus");
 
@@ -112,6 +112,12 @@
             window.location.href = "{{ url('/routes') }}";
             return false;
         });
+
+        // Delete route button
+        $("[id^=form-delete-everoute-]").submit(function() {
+			var name = $(this).parent().prev().children(":first").text();
+            return confirm("Are you sure you want to delete \"" + name + "\"?");
+		});
     });
 @endsection
 

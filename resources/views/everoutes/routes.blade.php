@@ -47,7 +47,7 @@
                                 </form>
 
                                 <!-- Route Delete Button -->
-                                <form class="inline" action="{{ url('/route/'.$route->id) }}" method="POST">
+                                <form class="inline" id="form-delete-everoute-{{ $route->id }}" action="{{ url('/route/'.$route->id) }}" method="POST">
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
 
