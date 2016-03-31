@@ -8,7 +8,12 @@
                     @if (isset($editroute)) 
                         Edit Route - {{ $editroute->name }}
                     @else
-                        New Route
+                        <div class="new-route-title">New Route</div>
+                        <div class="new-route-buttons">
+                            <button type="button" id="pastebutton" class="btn btn-default">
+                                <i class="fa fa-btn fa-paste"></i>Paste
+                            </button>
+                        </div>
                     @endif
                 </div>
 
@@ -128,8 +133,12 @@
         cursor: pointer;
     }
 
-    form.inline {
-        display: inline;
+    .panel-heading > .new-route-title {
+        float: left;
+    }
+
+    .panel-heading > .new-route-buttons {
+        text-align: right;
     }
 
     .input-error {

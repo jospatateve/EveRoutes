@@ -27,34 +27,34 @@
                         <tr>
                             <td class="table-text"><div>{{ $route->name }}</div></td>
 
-                            <td style="text-align:right">
+                            <td class="text-right">
                                 <!-- Route Load Button -->
-                                <form class="inline" action="{{ url('/route/'.$route->id.'/loadwaypoints') }}" method="GET">
+                                <form id="form-load-everoute-{{ $route->id }}" action="{{ url('/route/'.$route->id.'/loadwaypoints') }}" method="GET">
                                     {{ csrf_field() }}
-
-                                    <button type="submit" id="load-everoute-{{ $route->id }}" class="btn btn-default">
-                                        <i class="fa fa-btn fa-play"></i>Load
-                                    </button>
                                 </form>
 
                                 <!-- Route Edit Button -->
-                                <form class="inline" action="{{ url('/route/'.$route->id.'/edit') }}" method="GET">
+                                <form id="form-edit-everoute-{{ $route->id }}" action="{{ url('/route/'.$route->id.'/edit') }}" method="GET">
                                     {{ csrf_field() }}
-
-                                    <button type="submit" id="load-everoute-{{ $route->id }}" class="btn btn-default">
-                                        <i class="fa fa-btn fa-edit"></i>Edit
-                                    </button>
                                 </form>
 
                                 <!-- Route Delete Button -->
-                                <form class="inline" id="form-delete-everoute-{{ $route->id }}" action="{{ url('/route/'.$route->id) }}" method="POST">
+                                <form id="form-delete-everoute-{{ $route->id }}" action="{{ url('/route/'.$route->id) }}" method="POST">
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
+                                </form>
 
-                                    <button type="submit" id="delete-everoute-{{ $route->id }}" class="btn btn-danger">
+                                <div class="btn-group">
+                                    <button type="submit" form="form-load-everoute-{{ $route->id }}" id="load-everoute-{{ $route->id }}" class="btn btn-default">
+                                        <i class="fa fa-btn fa-play"></i>Load
+                                    </button>
+                                    <button type="submit" form="form-edit-everoute-{{ $route->id }}" id="load-everoute-{{ $route->id }}" class="btn btn-default">
+                                        <i class="fa fa-btn fa-edit"></i>Edit
+                                    </button>
+                                    <button type="submit" form="form-delete-everoute-{{ $route->id }}" id="delete-everoute-{{ $route->id }}" class="btn btn-danger">
                                         <i class="fa fa-btn fa-trash"></i>Delete
                                     </button>
-                                </form>
+                                </div>
                             </td>
                         </tr>
                     @endforeach

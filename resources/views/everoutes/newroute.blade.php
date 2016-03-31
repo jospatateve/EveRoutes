@@ -35,13 +35,11 @@
             <button type="submit" class="btn btn-default">
                 <i class="fa fa-btn fa-plus"></i>Add Route
             </button>
-            <button type="button" id="pastebutton" class="btn btn-default">
-                <i class="fa fa-btn fa-paste"></i>Paste
-            </button>
         </div>
     </div>
  </form>
  
+ <!-- dialog containing the paste form -->
 <div id="pasteformdialog" title="Paste form">
     <!-- Paste Route Form -->
     <form id="pasteform" action="/route/paste" method="POST" class="form-horizontal">

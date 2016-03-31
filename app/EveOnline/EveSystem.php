@@ -57,6 +57,9 @@ class EveSystem extends EveCRESTResponse
 
 	public function getAlliance()
     {
+        if (!$this->has('sovereignty')) {
+            return 'none';
+        }
         return $this->get('sovereignty')['name'];
     }
 
