@@ -9,6 +9,7 @@ use Response;
 use App\EveSystem;
 use App\EveOnline\EveOAuthProvider;
 use App\EveOnline\EvePublicCREST;
+use App\ZKillboard\ZKillboard;
 
 class SystemController extends Controller
 {
@@ -39,11 +40,19 @@ class SystemController extends Controller
             if ($request->has('name')) {
                 $system = EveSystem::where('name', '=', $request->name)->first();
 
-                $eveoauth = new EveOAuthProvider();
+                $eveoauth = new EveOAuthProvider;
                 $evepubliccrest = new EvePublicCREST($eveoauth);
                 $systeminfo = $evepubliccrest->getSystem((int) $system->system_id);
 
-                return view('system.index')->with('system', $systeminfo);
+                $zkillboard = new ZKillboard;
+                $systemstats = $zkillboard->getSystemStats($system->system_id);
+                $latestkill = $zkillboard->getSystemLatestKill($system->system_id);
+
+                return view('system.index', [
+                    'system' => $systeminfo,
+                    'stats' => $systemstats,
+                    'kill' => $latestkill
+                ]);
             }
 
         return view('system.index');

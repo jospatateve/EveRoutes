@@ -62,8 +62,8 @@
                         <li><a href="{{ url('/location') }}">My Location</a></li>
                         <li><a href="{{ url('/routes') }}">My Routes</a></li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                <img src="https://imageserver.eveonline.com/Character/{{ Auth::user()->userid }}_32.jpg" />
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                                <img src="https://imageserver.eveonline.com/Character/{{ Auth::user()->userid }}_32.jpg" class="img-rounded" width="32" height="32" />
                                 {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
 
@@ -74,7 +74,7 @@
                         </li>
                     @else
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
                                 Log in <span class="caret"></span>
                             </a>
 

@@ -14,8 +14,8 @@
                     @endif
                     @if (isset($userinfo))
                         <p style="float:left;width:300px">
-                            <img src="{{ $userinfo->getPortrait() }}"/>
-                            <img src="{{ $userinfo->getCorporationLogo() }}"/>
+                            <img src="{{ $userinfo->getPortrait() }}" class="img-rounded" width="128" height="128" />
+                            <img src="{{ $userinfo->getCorporationLogo() }}" class="img-rounded" width="128" height="128" />
                         </p>
                         <ul>
                             <li>Name: {{ $userinfo->getName() }}</li>
@@ -30,31 +30,41 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Yearly Statistics</div>
                     <div class="panel-body">
-                        <div id="yearlystats">
+                        <div class="panel-group" id="accordion">
                             @foreach ($userstats->getYearlyStats() as $year => $yearstats)
-                                <h3>{{ $year }}</h3>
-                                <div>
-                                    <ul>
-                                        <li>Time played: {{ $yearstats->getTimePlayed()->format('%a days %h hours %i minutes') }}</li>
-                                        <li>Times logged on: {{ number_format($yearstats->getTimesLoggedOn()) }}</li>
-                                    </ul>
-                                    <ul>
-                                        <li>Damage Taken: {{ number_format($yearstats->getDamageTaken()) }}</li>
-                                        <li>Damage Dealt: {{ number_format($yearstats->getDamageDealt()) }}</li>
-                                        <li>Losses: {{ number_format($yearstats->getNumberOfLosses()) }}</li>
-                                        <li>Kills: {{ number_format($yearstats->getNumberOfKills()) }}</li>
-                                    </ul>
-                                    <ul>
-                                        <li>Number of jumps: {{ number_format($yearstats->getNumberOfJumps()) }}</li>
-                                        <li>Number of warps: {{ number_format($yearstats->getNumberOfWarps()) }}</li>
-                                        <li>Distance warped: {{ number_format($yearstats->getDistanceTraveled()) }} au</li>
-                                    </ul>
-                                    <ul>
-                                        <li>Cans hacked successfully: {{ number_format($yearstats->getNumberOfCansHacked()) }}</li>
-                                        <li>Hacking success rate: {{ sprintf("%.2f%%", $yearstats->getHackingSuccessRate() * 100) }}</li>
-                                        <li>Times cloaked: {{ number_format($yearstats->getNumberOfCloakActivations()) }}</li>
-                                    </ul>
-                                    <!--<pre>{{ json_encode($yearstats->getJSON(), JSON_PRETTY_PRINT) }}</pre>-->
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse-{{ $year }}">
+                                                {{ $year }}
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse-{{ $year }}" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <ul>
+                                                <li>Time played: {{ $yearstats->getTimePlayed()->format('%a days %h hours %i minutes') }}</li>
+                                                <li>Times logged on: {{ number_format($yearstats->getTimesLoggedOn()) }}</li>
+                                            </ul>
+                                            <ul>
+                                                <li>Damage Taken: {{ number_format($yearstats->getDamageTaken()) }}</li>
+                                                <li>Damage Dealt: {{ number_format($yearstats->getDamageDealt()) }}</li>
+                                                <li>Losses: {{ number_format($yearstats->getNumberOfLosses()) }}</li>
+                                                <li>Kills: {{ number_format($yearstats->getNumberOfKills()) }}</li>
+                                            </ul>
+                                            <ul>
+                                                <li>Number of jumps: {{ number_format($yearstats->getNumberOfJumps()) }}</li>
+                                                <li>Number of warps: {{ number_format($yearstats->getNumberOfWarps()) }}</li>
+                                                <li>Distance warped: {{ number_format($yearstats->getDistanceTraveled()) }} au</li>
+                                            </ul>
+                                            <ul>
+                                                <li>Cans hacked successfully: {{ number_format($yearstats->getNumberOfCansHacked()) }}</li>
+                                                <li>Hacking success rate: {{ sprintf("%.2f%%", $yearstats->getHackingSuccessRate() * 100) }}</li>
+                                                <li>Times cloaked: {{ number_format($yearstats->getNumberOfCloakActivations()) }}</li>
+                                            </ul>
+                                            <!--<pre>{{ json_encode($yearstats->getJSON(), JSON_PRETTY_PRINT) }}</pre>-->
+                                        </div>
+                                    </div>
                                 </div>
                             @endforeach
                         </div>
@@ -64,13 +74,4 @@
         </div>
     </div>
 </div>
-@endsection
-
-@section('scripts')
-$(function() {
-    $("#yearlystats").accordion({
-        collapsible: true,
-        active: false
-    });
-});
 @endsection
