@@ -40,25 +40,39 @@
  </form>
  
  <!-- dialog containing the paste form -->
-<div id="pasteformdialog" title="Paste form">
-    <!-- Paste Route Form -->
-    <form id="pasteform" action="/route/paste" method="POST" class="form-horizontal">
-        {{ csrf_field() }}
+<div id="pasteformdialog" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Paste form</h4>
+            </div>
+            <div class="modal-body">
+                <!-- Paste Route Form -->
+                <form id="pasteform" action="/route/paste" method="POST" class="form-horizontal">
+                    {{ csrf_field() }}
 
-        <!-- Route Name -->
-        <div class="form-group">
-            <label for="everoute-name" class="col-sm-3 control-label">Name</label>
-            <div class="col-sm-9">
-                <input type="text" name="name" id="everoute-name" class="form-control" value="{{ old('name') }}">
+                    <!-- Route Name -->
+                    <div class="form-group">
+                        <label for="everoute-name" class="col-sm-3 control-label">Name</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="name" id="everoute-name" class="form-control" value="{{ old('name') }}">
+                        </div>
+                    </div>
+
+                    <!-- Route Waypoints -->
+                    <div class="form-group">
+                        <label for="everoute-waypointsdump" class="col-sm-3 control-label">Waypoints</label>
+                        <div class="col-sm-9">
+                            <textarea name="waypointsdump" id="everoute-waypointsdump" class="form-control" rows="10">{{ old('waypointsdump') }}</textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" form="pasteform" class="btn btn-default">Ok</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
             </div>
         </div>
-
-        <!-- Route Waypoints -->
-        <div class="form-group">
-            <label for="everoute-waypointsdump" class="col-sm-3 control-label">Waypoints</label>
-            <div class="col-sm-9">
-                <textarea name="waypointsdump" id="everoute-waypointsdump" class="form-control">{{ old('waypointsdump') }}</textarea>
-            </div>
-        </div>
-    </form>
+    </div>
 </div>

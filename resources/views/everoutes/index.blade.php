@@ -10,7 +10,7 @@
                     @else
                         <div class="new-route-title">New Route</div>
                         <div class="new-route-buttons">
-                            <button type="button" id="pastebutton" class="btn btn-default">
+                            <button type="button" id="pastebutton" class="btn btn-default" data-toggle="modal" data-target="#pasteformdialog">
                                 <i class="fa fa-btn fa-paste"></i>Paste
                             </button>
                         </div>
@@ -38,29 +38,6 @@
 
 @section('scripts')
     $(function() {
-        // Paste form dialog
-        $("#pasteformdialog").dialog({
-            dialogClass: "panel panel-default",
-            autoOpen: false,
-            modal: true,
-            minWidth: 400,
-            resizable: false,
-            buttons: [{
-                text: "Ok",
-                click: function() {
-                    $("#pasteform").submit();
-                }
-            },{
-                text: "Cancel",
-                click: function() {
-                    $(this).dialog("close");
-               }
-			}]
-        });
-        $("#pastebutton").click(function() {
-            $("#pasteformdialog").dialog("open");
-		});
-
         // Drag-drop sort
         $("#waypoints-form").sortable();
 
@@ -89,7 +66,7 @@
             // Update label, input field and delete button
             $("#waypoint-form-" + system_name_form_index + " > label")
                 .attr("for", "everoute-waypoints-" + system_name_form_index)
-                .html("<span class=\"ui-icon ui-icon-arrowthick-2-n-s\"></span>");
+                .html("<span class=\"glyphicon glyphicon-resize-vertical\"></span>");
             $("#waypoint-form-" + system_name_form_index + " > div > input")
                 .attr("id", "everoute-waypoints-" + system_name_form_index)
                 .removeClass("input-error")
@@ -127,9 +104,7 @@
 @endsection
 
 @section('styles')
-    span.ui-icon {
-        background-image: url({{ url('/jquery-ui/images/ui-icons_454545_256x240.png') }});
-        display: inline-block;
+    span.glyphicon {
         cursor: pointer;
     }
 

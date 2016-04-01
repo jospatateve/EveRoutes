@@ -13,7 +13,7 @@
     @else
             <div id="waypoints-form-{{ $waypoint }}-{{ $index }}">
                 <label for="everoute-waypoints-{{ $waypoint }}-{{ $index }}" class="col-sm-3 control-label">
-                    <span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
+                    <span class="glyphicon glyphicon-resize-vertical"></span>
                 </label>
                 <div class="col-sm-6">
                     <input type="text" name="waypoints[]" id="everoute-waypoints-{{ $waypoint }}-{{ $index }}" class="form-control {{ $errors->has('waypoints.'.$index) ? 'input-error' : ''}}" value="{{ $waypoint }}">
