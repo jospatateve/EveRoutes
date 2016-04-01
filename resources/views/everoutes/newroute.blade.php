@@ -21,7 +21,7 @@
                     <input type="text" name="waypoints[]" id="everoute-waypoints-" class="form-control {{ $errors->has('waypoints.0') ? 'input-error' : ''}}" value="">
                 </div>
                 <button type="button" class="btn btn-default" id="add_system_name">
-                    <i class="fa fa-btn fa-plus"></i>
+                    <span class="glyphicon glyphicon-plus"></span>
                 </button>
             </div>
             <div id="waypoints-form">

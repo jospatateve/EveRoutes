@@ -8,11 +8,13 @@
                     @if (isset($editroute)) 
                         Edit Route - {{ $editroute->name }}
                     @else
-                        <div class="new-route-title">New Route</div>
-                        <div class="new-route-buttons">
-                            <button type="button" id="pastebutton" class="btn btn-default" data-toggle="modal" data-target="#pasteformdialog">
-                                <i class="fa fa-btn fa-paste"></i>Paste
-                            </button>
+                        <div class="row">
+                            <div class="col-sm-6">New Route</div>
+                            <div class="col-sm-6 text-right">
+                                <button type="button" id="pastebutton" class="btn btn-default" data-toggle="modal" data-target="#pasteformdialog">
+                                    <i class="fa fa-btn fa-paste"></i>Paste
+                                </button>
+                            </div>
                         </div>
                     @endif
                 </div>
@@ -74,8 +76,8 @@
             $("#waypoint-form-" + system_name_form_index + " > button")
                 .attr("id", "remove_system_name-" + system_name_form_index)
                 .children(":first")
-                    .removeClass("fa-plus")
-                    .addClass("fa-minus");
+                    .removeClass("glyphicon-plus")
+                    .addClass("glyphicon-minus");
 
             // Enable autocomplete for new input field
             $("#everoute-waypoints-" + system_name_form_index).autocomplete({
@@ -104,16 +106,8 @@
 @endsection
 
 @section('styles')
-    span.glyphicon {
+    label > span.glyphicon {
         cursor: pointer;
-    }
-
-    .panel-heading > .new-route-title {
-        float: left;
-    }
-
-    .panel-heading > .new-route-buttons {
-        text-align: right;
     }
 
     .input-error {

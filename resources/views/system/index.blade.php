@@ -69,7 +69,6 @@
                             <li>Latest kill: {{ $kill['killTime'] }}</li>
                             <li>Victim: {{ $kill['victim']['characterName'] }}</li>
                             <li>Attackers: {{ implode(', ', array_map(function($v) { return $v['characterName']; }, $kill['attackers'])) }}</li>
-                            <li>Final blow: {{ array_filter($kill['attackers'], function($v) { return $v['finalBlow'] == 1; })[0]['characterName'] }}</li>
                             <li>Killmail: <a href="https://zkillboard.com/kill/{{ $kill['killID'] }}/">zkillboard</a></li>
                         </ul>
                         <!--<pre>{{ json_encode($kill, JSON_PRETTY_PRINT) }}</pre>-->

@@ -17,7 +17,7 @@
                 </div>
             @endif
 
-            <table class="table table-striped task-table">
+            <table class="table table-striped">
                  <thead>
                     <th>Route</th>
                     <th>&nbsp;</th>
@@ -25,7 +25,7 @@
                 <tbody>
                     @foreach ($everoutes as $route)
                         <tr>
-                            <td class="table-text"><div>{{ $route->name }}</div></td>
+                            <td class="table-text">{{ $route->name }}</td>
 
                             <td class="text-right">
                                 <!-- Route Load Button -->

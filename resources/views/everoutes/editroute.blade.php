@@ -21,7 +21,7 @@
                     <input type="text" name="waypoints[]" id="everoute-waypoints-" class="form-control {{ $errors->has('waypoints.'.$index) ? 'input-error' : ''}}" value="">
                 </div>
                 <button type="button" class="btn btn-default" id="add_system_name">
-                    <i class="fa fa-btn fa-plus"></i>
+                    <span class="glyphicon glyphicon-plus"></span>
                 </button>
             </div>
             <div id="waypoints-form">
@@ -34,7 +34,7 @@
                             <input type="text" name="waypoints[]" id="everoute-waypoints-" class="form-control {{ $errors->has('waypoints.'.$index) ? 'input-error' : ''}}" value="{{ $waypoint }}">
                         </div>
                         <button type="button" class="btn btn-default" id="add_system_name">
-                            <i class="fa fa-btn fa-plus"></i>
+                            <span class="glyphicon glyphicon-plus"></span>
                         </button>
                     </div>
                     <div id="waypoints-form">
@@ -47,7 +47,7 @@
                             <input type="text" name="waypoints[]" id="everoute-waypoints-{{ $waypoint }}-{{ $index }}" class="form-control" value="{{ old('everoute') ?: $waypoint }}">
                         </div>
                         <button type="button" class="btn btn-default" id="remove_system_name-{{ $waypoint }}-{{ $index }}">
-                            <i class="fa fa-btn fa-minus"></i>
+                            <span class="glyphicon glyphicon-minus"></span>
                         </button>
                     </div>
                 @endif

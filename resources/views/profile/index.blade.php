@@ -13,16 +13,20 @@
                         </div>
                     @endif
                     @if (isset($userinfo))
-                        <p style="float:left;width:300px">
-                            <img src="{{ $userinfo->getPortrait() }}" class="img-rounded" width="128" height="128" />
-                            <img src="{{ $userinfo->getCorporationLogo() }}" class="img-rounded" width="128" height="128" />
-                        </p>
-                        <ul>
-                            <li>Name: {{ $userinfo->getName() }}</li>
-                            <li>Id: {{ $userinfo->getId() }}</li>
-                            <li>Gender: {{ $userinfo->getGender() }}</li>
-                            <li>Corporation: {{ $userinfo->getCorporation() }}</li>
-                        </ul>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <img src="{{ $userinfo->getPortrait() }}" class="img-rounded" width="128" height="128" />
+                                <img src="{{ $userinfo->getCorporationLogo() }}" class="img-rounded" width="128" height="128" />
+                            </div>
+                            <div class="col-sm-8">
+                                <ul>
+                                    <li>Name: {{ $userinfo->getName() }}</li>
+                                    <li>Id: {{ $userinfo->getId() }}</li>
+                                    <li>Gender: {{ $userinfo->getGender() }}</li>
+                                    <li>Corporation: {{ $userinfo->getCorporation() }}</li>
+                                </ul>
+                            </div>
+                        </div>
                     @endif
                 </div>
             </div>
