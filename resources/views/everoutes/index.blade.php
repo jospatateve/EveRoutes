@@ -99,7 +99,7 @@
 
         // Delete route button
         $("[id^=form-delete-everoute-]").submit(function() {
-			var name = $(this).parent().prev().children(":first").text();
+			var name = $(this).parent().prev().text();
             return confirm("Are you sure you want to delete \"" + name + "\"?");
 		});
     });
