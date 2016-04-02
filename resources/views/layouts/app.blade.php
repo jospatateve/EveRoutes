@@ -12,10 +12,8 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
 
     <!-- Styles -->
-    <link href="{{ url('/jquery-ui/jquery-ui.min.css') }}" rel="stylesheet">
-    <link href="{{ url('/jquery-ui/jquery-ui.structure.min.css') }}" rel="stylesheet">
-    <link href="{{ url('/jquery-ui/jquery-ui.theme.min.css') }}" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url('/css/autocomplete.css') }}" rel="stylesheet">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
     <style>
