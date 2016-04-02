@@ -17,12 +17,14 @@
         @else
             <div id="waypoint-form-">
                 <label for="everoute-waypoints-" class="col-sm-3 control-label">Waypoints</label>
-                <div class="col-sm-6">
-                    <input type="text" name="waypoints[]" id="everoute-waypoints-" class="form-control {{ $errors->has('waypoints.0') ? 'input-error' : ''}}" value="">
-                </div>
-                <button type="button" class="btn btn-default" id="add_system_name">
-                    <span class="glyphicon glyphicon-plus"></span>
-                </button>
+                <div class="col-sm-6"><div class="input-group">
+                    <input type="text" name="waypoints[]" id="everoute-waypoints-" class="form-control" value="">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-success btn-add" id="add_system_name">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                    </span>
+                </div></div>
             </div>
             <div id="waypoints-form">
             </div>

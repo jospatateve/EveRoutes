@@ -2,38 +2,40 @@
 
 @section('content')
     <div class="container">
-        <div class="col-sm-offset-2 col-sm-8">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    @if (isset($editroute)) 
-                        Edit Route - {{ $editroute->name }}
-                    @else
-                        <div class="row">
-                            <div class="col-sm-6">New Route</div>
-                            <div class="col-sm-6 text-right">
-                                <button type="button" id="pastebutton" class="btn btn-default" data-toggle="modal" data-target="#pasteformdialog">
-                                    <i class="fa fa-btn fa-paste"></i>Paste
-                                </button>
+        <div class="row">
+            <div class="col-sm-offset-2 col-sm-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        @if (isset($editroute)) 
+                            Edit Route - {{ $editroute->name }}
+                        @else
+                            <div class="row">
+                                <div class="col-sm-6">New Route</div>
+                                <div class="col-sm-6 text-right">
+                                    <button type="button" id="pastebutton" class="btn btn-default" data-toggle="modal" data-target="#pasteformdialog">
+                                        <i class="fa fa-btn fa-paste"></i>Paste
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    @endif
+                        @endif
+                    </div>
+
+                    <div class="panel-body">
+                        <!-- Display Validation Errors -->
+                        @include('common.errors')
+
+                        <!-- Form to Add or Update Route -->
+                        @if (isset($editroute)) 
+                            @include('everoutes.editroute')
+                        @else
+                            @include('everoutes.newroute')
+                        @endif
+                    </div>
                 </div>
 
-                <div class="panel-body">
-                    <!-- Display Validation Errors -->
-                    @include('common.errors')
-
-                    <!-- Form to Add or Update Route -->
-                    @if (isset($editroute)) 
-                        @include('everoutes.editroute')
-                    @else
-                        @include('everoutes.newroute')
-                    @endif
-                </div>
+                @include('everoutes.routes')
+ 
             </div>
-
-            @include('everoutes.routes')
-
         </div>
     </div>
 @endsection
@@ -51,7 +53,7 @@
         // Remove waypoint input field button
         $("[id^=remove_system_name-]").click(function() {
             // Remove the cloned div
-            $(this).parent().remove();
+            $(this).parent().parent().parent().parent().remove();
         });
 
         // Unique index to keep track of waypoint input field count
@@ -69,15 +71,15 @@
             $("#waypoint-form-" + system_name_form_index + " > label")
                 .attr("for", "everoute-waypoints-" + system_name_form_index)
                 .html("<span class=\"glyphicon glyphicon-resize-vertical\"></span>");
-            $("#waypoint-form-" + system_name_form_index + " > div > input")
+            $("#waypoint-form-" + system_name_form_index + " > div > div > input")
                 .attr("id", "everoute-waypoints-" + system_name_form_index)
                 .removeClass("input-error")
                 .val("");
-            $("#waypoint-form-" + system_name_form_index + " > button")
+            $("#waypoint-form-" + system_name_form_index + " > div > div > span > button")
                 .attr("id", "remove_system_name-" + system_name_form_index)
-                .children(":first")
-                    .removeClass("glyphicon-plus")
-                    .addClass("glyphicon-minus");
+                .removeClass("input-error btn-add btn-success")
+                .addClass("btn-remove btn-danger")
+                .html("<span class=\"glyphicon glyphicon-minus\"></span>");
 
             // Enable autocomplete for new input field
             $("#everoute-waypoints-" + system_name_form_index).autocomplete({
@@ -87,7 +89,7 @@
             // Remove waypoint input field button
             $("#remove_system_name-" + system_name_form_index).click(function() {
                 // Remove the cloned div
-                $(this).parent().remove();
+                $(this).parent().parent().parent().parent().remove();
             });
         });
 
@@ -106,12 +108,25 @@
 @endsection
 
 @section('styles')
-    label > span.glyphicon {
-        cursor: pointer;
-    }
-
     .input-error {
         border-color: #a94442;
         box-shadow: 0 0 5px #a94442;
+    }
+
+    div[id^=waypoint-form-] {
+        overflow: hidden;
+        width: 100%;
+    }
+
+    div[id^=waypoint-form-] > label > span.glyphicon {
+        cursor: pointer;
+    }
+
+    div[id^=waypoint-form-] > div > div > span > button > span.glyphicon {
+        font-size: 12px;
+    }
+
+    #waypoints-form > div[id^=waypoint-form-] {
+        margin-top: 5px;
     }
 @endsection
