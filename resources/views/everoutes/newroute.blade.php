@@ -72,7 +72,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" form="pasteform" class="btn btn-default">Ok</button>
+                <button type="submit" form="pasteform" class="btn btn-primary">Ok</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
             </div>
         </div>

@@ -8,11 +8,13 @@
         <div class="panel-body">
             @if (Session::has('loadedsuccess'))
                 <div class="alert alert-success">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                     <strong>Route "{{ Session::get('loadedsuccess') }}" successfully loaded into EVE.</strong>
                 </div>
             @endif
             @if (Session::has('exception'))
                 <div class="alert alert-danger">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                     <strong>Failed to load route ({{ Session::get('exception') }}).</strong>
                 </div>
             @endif
@@ -28,21 +30,37 @@
                             <td class="table-text">{{ $route->name }}</td>
 
                             <td class="text-right">
-                                <!-- Route Load Button -->
                                 <form id="form-load-everoute-{{ $route->id }}" action="{{ url('/route/'.$route->id.'/loadwaypoints') }}" method="GET">
                                     {{ csrf_field() }}
                                 </form>
 
-                                <!-- Route Edit Button -->
                                 <form id="form-edit-everoute-{{ $route->id }}" action="{{ url('/route/'.$route->id.'/edit') }}" method="GET">
                                     {{ csrf_field() }}
                                 </form>
 
-                                <!-- Route Delete Button -->
                                 <form id="form-delete-everoute-{{ $route->id }}" action="{{ url('/route/'.$route->id) }}" method="POST">
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
                                 </form>
+
+                                <!-- Confirm delete dialog -->
+                                <div id="confirm-delete-{{ $route->id }}" class="text-left modal fade" role="dialog">
+                                    <div class="modal-dialog modal-sm">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">Confirm delete</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Are you sure you want to delete the route "{{ $route->name }}"?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" form="form-delete-everoute-{{ $route->id }}" class="btn btn-primary">Yes</button>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <div class="btn-group">
                                     <button type="submit" form="form-load-everoute-{{ $route->id }}" id="load-everoute-{{ $route->id }}" class="btn btn-default">
@@ -51,7 +69,7 @@
                                     <button type="submit" form="form-edit-everoute-{{ $route->id }}" id="load-everoute-{{ $route->id }}" class="btn btn-default">
                                         <i class="fa fa-btn fa-edit"></i>Edit
                                     </button>
-                                    <button type="submit" form="form-delete-everoute-{{ $route->id }}" id="delete-everoute-{{ $route->id }}" class="btn btn-danger">
+                                    <button type="button" data-toggle="modal" data-target="#confirm-delete-{{ $route->id }}" id="delete-everoute-{{ $route->id }}" class="btn btn-danger">
                                         <i class="fa fa-btn fa-trash"></i>Delete
                                     </button>
                                 </div>
