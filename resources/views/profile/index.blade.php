@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
+        <div class="col-sm-offset-2 col-sm-8">
             <div class="panel panel-default">
                 <div class="panel-heading">Information</div>
                 <div class="panel-body">
@@ -14,11 +14,11 @@
                     @endif
                     @if (isset($userinfo))
                         <div class="row">
-                            <div class="col-sm-4">
+                            <div class="col-sm-6">
                                 <img src="{{ $userinfo->getPortrait() }}" class="img-rounded" width="128" height="128" />
                                 <img src="{{ $userinfo->getCorporationLogo() }}" class="img-rounded" width="128" height="128" />
                             </div>
-                            <div class="col-sm-8">
+                            <div class="col-sm-6">
                                 <ul>
                                     <li>Name: {{ $userinfo->getName() }}</li>
                                     <li>Id: {{ $userinfo->getId() }}</li>

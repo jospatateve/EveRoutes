@@ -38,6 +38,7 @@ Route::group(['middleware' => ['web']], function () {
 
     // manage eve routes
     Route::get('/routes', 'RouteController@index');
+    Route::get('/route/{everoute}', 'RoutePreviewController@index');
     Route::get('/route/{everoute}/edit', 'RouteController@index_update');
     Route::get('/route/{everoute}/loadwaypoints', 'RouteController@loadwaypoints');
     Route::post('/route', 'RouteController@store');

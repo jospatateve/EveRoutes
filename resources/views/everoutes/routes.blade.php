@@ -27,7 +27,9 @@
                 <tbody>
                     @foreach ($everoutes as $route)
                         <tr>
-                            <td class="table-text">{{ $route->name }}</td>
+                            <td class="table-text">
+                                <a href="{{ url('/route/'.$route->id) }}">{{ $route->name }}</a>
+                            </td>
 
                             <td class="text-right">
                                 <form id="form-load-everoute-{{ $route->id }}" action="{{ url('/route/'.$route->id.'/loadwaypoints') }}" method="GET">
