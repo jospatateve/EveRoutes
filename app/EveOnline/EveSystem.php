@@ -55,15 +55,22 @@ class EveSystem extends EveCRESTResponse
         return $this->get('securityStatus');
     }
 
-	public function getSecurityClass()
+    public function getSecurityClass()
     {
-        return $this->get('securityClass');
+        $secclass = $this->get('securityClass');
+        if ($secclass <= 0) {
+            return $this->isWH() ? 'Wormhole' : 'Null sec';
+        } elseif ($secclass) {
+            return 'Low sec';
+        } else {
+            return 'High sec';
+        }
     }
 
 	public function getAlliance()
     {
         if (!$this->has('sovereignty')) {
-            return 'none';
+            return '';
         }
         return $this->get('sovereignty')['name'];
     }

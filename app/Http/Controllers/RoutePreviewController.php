@@ -8,6 +8,8 @@ use App\EveRoute;
 use App\EveSystem;
 
 use App\EveOnline\EveMap;
+use App\EveOnline\EveOAuthProvider;
+use App\EveOnline\EvePublicCREST;
 
 class RoutePreviewController extends Controller
 {
@@ -41,14 +43,26 @@ class RoutePreviewController extends Controller
         }
         $totaltime = microtime(true) - $starttime;
 
-        array_walk_recursive($waypoints, function(&$waypoint) {
-            $waypoint = EveSystem::where('system_id', "$waypoint")->first();
-        });
+        try {
+            $eveoauth = new EveOAuthProvider;
+            $evepubliccrest = new EvePublicCREST($eveoauth);
+     
+            array_walk_recursive($waypoints, function(&$waypoint) use ($evepubliccrest) {
+                $waypoint = $evepubliccrest->getSystem($waypoint);
+            });
 
-        return view('routepreview.index', [
-            'route' => $everoute,
-            'waypoints' => $waypoints,
-            'time' => $totaltime
-        ]);
+            return view('routepreview.index', [
+                'route' => $everoute,
+                'waypoints' => $waypoints,
+                'time' => $totaltime
+            ]);
+        } catch (\Exception $e) {
+            return view('routepreview.index', [
+                'route' => $everoute,
+                'waypoints' => $waypoints,
+                'time' => $totaltime,
+                'exception' => $e->getMessage()
+            ]);
+        }
     }
 }

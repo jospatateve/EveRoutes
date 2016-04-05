@@ -50,23 +50,28 @@
                     </div>
 
                     <div class="panel-body">
+                        @if (isset($exception))
+                            <div class="alert alert-danger">
+                                <strong>{{ $exception }}</strong>
+                            </div>
+                        @endif
+
                         <table class="table table-striped table-counted">
                              <thead>
                                 <th>Route</th>
+                                <th>Security Class</th>
                                 <th>Security Status</th>
+                                <th>Sovereignty</th>
                             </thead>
                             <tbody>
                                 @foreach ($waypoints as $route)
                                     @foreach ($route as $index => $waypoint)
-                                        @if ($index == count($route)-1)
+                                        @if ($index > 0)
                                             <tr>
-                                                <td class="table-text"><strong>{{ $waypoint->name }}</strong></td>
-                                                <td class="table-text">{{ round($waypoint->security_status, 2) }}</td>
-                                            </tr>
-                                        @elseif ($index > 0)
-                                            <tr>
-                                                <td class="table-text">{{ $waypoint->name }}</td>
-                                                <td class="table-text">{{ round($waypoint->security_status, 2) }}</td>
+                                                <td class="table-text {{ ($index == count($route)-1) ? 'strong' : '' }}">{{ $waypoint->getName() }}</td>
+                                                <td class="table-text">{{ $waypoint->getSecurityClass() }}</td>
+                                                <td class="table-text">{{ round($waypoint->getSecurityStatus(), 2) }}</td>
+                                                <td class="table-text">{{ $waypoint->isWH() ? '' : $waypoint->getAlliance() }}</td>
                                             </tr>
                                         @endif
                                     @endforeach
@@ -136,5 +141,9 @@
         content: counter(rowNumber);
         min-width: 1em;
         margin-right: 0.5em;
+    }
+
+    .strong {
+        font-weight: bold;
     }
 @endsection
