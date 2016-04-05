@@ -4,33 +4,130 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-offset-2 col-sm-8">
-            <div class="panel panel-info">
-                <div class="panel-heading"><strong>Information</strong></div>
-                <div class="panel-body">
-                    <strong>Not implemented yet.</strong>
-                </div>
-            </div>
-
             <div class="panel panel-default">
                 <div class="panel-heading">
-				{{ $route->name }} - Preview
+                    Route options
                 </div>
 
-                <div class="panel-body">
-                    <ul class="list-group">
-                        @foreach ($waypoints as $route)
-                            <li class="list-group-item">
-                                <ul>
-                                    @foreach ($route as $waypoint)
-                                        <li>{{ $waypoint }}</li>
-                                    @endforeach
-                                </ul>
-                            </li>
-                        @endforeach
-                    </ul>
+                <div id="options-form-panel" class="panel-body">
+                    <!-- Display Validation Errors -->
+                    @include('common.errors')
+
+                    <!-- Route options form -->
+                    <form id="route-options-form" action="/route/{{ $route->id }}" method="GET" class="form-horizontal">
+                        {{ csrf_field() }}
+
+                        <!-- System Name -->
+                        <div class="form-group">
+                            <label for="system-name" class="col-sm-3 control-label">Start system</label>
+                            <div class="col-sm-6"><div class="input-group">
+                                <input type="text" name="from" id="system-name" class="form-control" value="{{ old('from') ?: app('request')->input('from') ?: '' }}">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-success btn-add" id="get_current_system">
+                                        <span class="glyphicon glyphicon-home"></span>
+                                    </button>
+                                </span>
+                            </div></div>
+                        </div>
+
+
+                        <!-- Search Button -->
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-6">
+                                <button type="submit" class="btn btn-default">
+                                    <i class="fa fa-btn fa-play"></i>Go
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
+
+            @if (isset($waypoints) && !(count($errors) > 0))
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                    {{ $route->name }} - Preview
+                    </div>
+
+                    <div class="panel-body">
+                        <table class="table table-striped table-counted">
+                             <thead>
+                                <th>Waypoint</th>
+                            </thead>
+                            <tbody>
+                                @foreach ($waypoints as $route)
+                                    @foreach ($route as $index => $waypoint)
+                                        @if ($index == count($route)-1)
+                                            <tr>
+                                                <td class="table-text"><strong>{{ $waypoint }}</strong></td>
+                                            </tr>
+                                        @elseif ($index > 0)
+                                            <tr>
+                                                <td class="table-text">{{ $waypoint }}</td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+    function display_error_message(message) {
+        $("#options-form-panel").prepend(
+            "<div class=\"alert alert-danger\">" +
+            "   <a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>" +
+            "   <strong>" + message + "</strong>" +
+            "</div>"
+        );
+    }
+
+    $(function() {
+        // Autocomplete
+        $("#system-name").autocomplete({
+            source: "/system/autocomplete",
+            select: function(event, ui) {
+                $(this).val(ui.item.value);
+                $("#route-options-form").submit();
+                return false;
+            }
+        });
+
+        // Get the current location
+        $("#get_current_system").click(function() {
+            $.getJSON(
+                "{{ url('/location/json') }}"
+            ).done(function(json) {
+                if (json.valid) {
+                    $("#system-name").val(json.location.name);
+                } else {
+                    display_error_message("Unabled to locate {{ Auth::user()->name }}.");
+                }
+            }).fail(function(jqXHR) {
+                display_error_message("Unabled to locate {{ Auth::user()->name }} (" + jqXHR.responseJSON.error + ")");
+            });
+        });
+    });
+@endsection
+
+@section('styles')
+    table.table-counted {
+        counter-reset: rowNumber;
+    }
+
+    table.table-counted tbody tr {
+        counter-increment: rowNumber;
+    }
+
+    table.table-counted tbody tr td:first-child::before {
+        content: counter(rowNumber);
+        min-width: 1em;
+        margin-right: 0.5em;
+    }
 @endsection

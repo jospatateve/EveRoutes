@@ -19,7 +19,7 @@
 
                         <!-- System Name -->
                         <div class="form-group">
-                            <label for="name" class="col-sm-3 control-label">System</label>
+                            <label for="system-name" class="col-sm-3 control-label">System</label>
                             <div class="col-sm-6">
                                 <input type="text" name="name" id="system-name" class="form-control" value="{{ old('name') ?: app('request')->input('name') ?: '' }}">
                             </div>

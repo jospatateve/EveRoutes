@@ -21,20 +21,22 @@ class RoutePreviewController extends Controller
     public function index(Request $request, EveRoute $everoute)
     {
         $this->authorize('loadwaypoints', $everoute);
+        $this->validate($request, [
+            'from' => 'max:255|exists:eve_systems,name|notwh'
+        ]);
+ 
+        if (!$request->has('from')) {
+            return view('routepreview.index')->with('route', $everoute);
+        }
 
         $waypoints = [];
         $waypointsraw = explode(';', $everoute->waypoints);
         $waypointids = array_filter($waypointsraw, 'strlen');
-        $first = true;
- 
+        $from = EveSystem::where('name', $request->from)->first()->system_id;
+
         foreach ($waypointids as $waypoint) {
-            if ($first) {
-                $from = $waypoint;
-                $first = false;
-            } else {
-                $waypoints[] = EveMap::shortestPath($from, $waypoint);
-                $from = $waypoint;
-            }
+            $waypoints[] = EveMap::shortestPath($from, $waypoint);
+            $from = $waypoint;
         }
 
         array_walk_recursive($waypoints, function(&$waypoint) {

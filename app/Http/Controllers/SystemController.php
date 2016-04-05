@@ -55,7 +55,7 @@ class SystemController extends Controller
                 ]);
             }
 
-        return view('system.index');
+            return view('system.index');
         } catch (\Exception $e) {
 			return view('system.index')->with('exception', $e->getMessage());
         }

@@ -35,6 +35,7 @@ Route::group(['middleware' => ['web']], function () {
 
     // current system information
     Route::get('/location', 'LocationController@location');
+    Route::get('/location/json', 'LocationController@location_json');
 
     // manage eve routes
     Route::get('/routes', 'RouteController@index');

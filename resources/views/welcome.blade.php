@@ -12,15 +12,18 @@
                     </div>
                 </div>
             @endif
-            <div class="panel panel-default">
-                @if (Auth::guest())
-                    <div class="panel-heading">Welcome - Log in to continue</div>
-                    <div class="panel-body">
+            @if (Auth::guest())
+                <div class="jumbotron">
+                    <h1>Welcome <small>to EveRoutes</small></h1>
+                    <br/>
+                    <p>
                         <a href= "{{url('/login/eveonline')}}">
                             <img src="{{url('/images/ssologin.png')}}" alt="Login with Eve Online"/>
                         </a>
-                    </div>
-                @else
+                    </p>
+                </div>
+            @else
+                <div class="panel panel-default">
                     <div class="panel-heading">Welcome</div>
                     <div class="panel-body">
                         <ul>
@@ -28,8 +31,8 @@
                             <li><a href="{{ url('/routes') }}">My Routes</a></li>
                         </ul>
                     </div>
-                @endif
-            </div>
+                </div>
+            @endif
         </div>
     </div>
 </div>
