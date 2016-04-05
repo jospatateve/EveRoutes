@@ -57,10 +57,10 @@ class EveSystem extends EveCRESTResponse
 
     public function getSecurityClass()
     {
-        $secclass = $this->get('securityClass');
+        $secclass = $this->getSecurityStatus();
         if ($secclass <= 0) {
             return $this->isWH() ? 'Wormhole' : 'Null sec';
-        } elseif ($secclass) {
+        } elseif ($secclass < 0.5) {
             return 'Low sec';
         } else {
             return 'High sec';
