@@ -55,6 +55,11 @@ class EveSystem extends EveCRESTResponse
         return $this->get('securityStatus');
     }
 
+	public function getSecurityClass()
+    {
+        return $this->get('securityClass');
+    }
+
 	public function getAlliance()
     {
         if (!$this->has('sovereignty')) {

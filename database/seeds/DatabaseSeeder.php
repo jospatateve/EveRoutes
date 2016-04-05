@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(EveSystemsTableSeeder::class);
         $this->call(EveSystemNeighboursSeeder::class);
+        $this->call(EveSystemsSecInfoSeeder::class);
 
         Model::guard();
     }

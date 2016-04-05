@@ -9,7 +9,7 @@
                     Search a System
                 </div>
 
-                <div class="panel-body">
+                <div id="search-form-panel" class="panel-body">
                     <!-- Display Validation Errors -->
                     @include('common.errors')
 
@@ -21,7 +21,18 @@
                         <div class="form-group">
                             <label for="system-name" class="col-sm-3 control-label">System</label>
                             <div class="col-sm-6">
-                                <input type="text" name="name" id="system-name" class="form-control" value="{{ old('name') ?: app('request')->input('name') ?: '' }}">
+                                @if (Auth::check())
+                                    <div class="input-group">
+                                        <input type="text" name="name" id="system-name" class="form-control" value="{{ old('name') ?: app('request')->input('name') ?: '' }}">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-success btn-add" id="get_current_system">
+                                                <span class="glyphicon glyphicon-home"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                @else
+                                    <input type="text" name="name" id="system-name" class="form-control" value="{{ old('name') ?: app('request')->input('name') ?: '' }}">
+                                @endif
                             </div>
                         </div>
 
@@ -82,6 +93,15 @@
 @endsection
 
 @section('scripts')
+    function display_error_message(message) {
+        $("#search-form-panel").prepend(
+            "<div class=\"alert alert-danger\">" +
+            "   <a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>" +
+            "   <strong>" + message + "</strong>" +
+            "</div>"
+        );
+    }
+
     $(function() {
         // Autocomplete
         $("#system-name").autocomplete({
@@ -92,5 +112,22 @@
                 return false;
             }
         });
+
+        @if (Auth::check())
+        // Get the current location
+            $("#get_current_system").click(function() {
+                $.getJSON(
+                    "{{ url('/location/json') }}"
+                ).done(function(json) {
+                    if (json.valid) {
+                        $("#system-name").val(json.location.name);
+                    } else {
+                        display_error_message("Unable to locate {{ Auth::user()->name }}.");
+                    }
+                }).fail(function(jqXHR) {
+                    display_error_message("Unable to locate {{ Auth::user()->name }} (" + jqXHR.responseJSON.error + ")");
+                });
+            });
+        @endif
     });
 @endsection

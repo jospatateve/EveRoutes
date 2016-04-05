@@ -46,30 +46,37 @@
             @if (isset($waypoints) && !(count($errors) > 0))
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                    {{ $route->name }} - Preview
+                        {{ $route->name }} - Preview
                     </div>
 
                     <div class="panel-body">
                         <table class="table table-striped table-counted">
                              <thead>
-                                <th>Waypoint</th>
+                                <th>Route</th>
+                                <th>Security Status</th>
                             </thead>
                             <tbody>
                                 @foreach ($waypoints as $route)
                                     @foreach ($route as $index => $waypoint)
                                         @if ($index == count($route)-1)
                                             <tr>
-                                                <td class="table-text"><strong>{{ $waypoint }}</strong></td>
+                                                <td class="table-text"><strong>{{ $waypoint->name }}</strong></td>
+                                                <td class="table-text">{{ round($waypoint->security_status, 2) }}</td>
                                             </tr>
                                         @elseif ($index > 0)
                                             <tr>
-                                                <td class="table-text">{{ $waypoint }}</td>
+                                                <td class="table-text">{{ $waypoint->name }}</td>
+                                                <td class="table-text">{{ round($waypoint->security_status, 2) }}</td>
                                             </tr>
                                         @endif
                                     @endforeach
                                 @endforeach
                             </tbody>
                         </table>
+                    </div>
+
+                    <div class="panel-footer">
+                        <div class="text-right">Calculated route in {{ round($time, 2) }} seconds.</div>
                     </div>
                 </div>
             @endif
@@ -107,10 +114,10 @@
                 if (json.valid) {
                     $("#system-name").val(json.location.name);
                 } else {
-                    display_error_message("Unabled to locate {{ Auth::user()->name }}.");
+                    display_error_message("Unable to locate {{ Auth::user()->name }}.");
                 }
             }).fail(function(jqXHR) {
-                display_error_message("Unabled to locate {{ Auth::user()->name }} (" + jqXHR.responseJSON.error + ")");
+                display_error_message("Unable to locate {{ Auth::user()->name }} (" + jqXHR.responseJSON.error + ")");
             });
         });
     });

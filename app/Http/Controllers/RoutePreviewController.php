@@ -34,19 +34,21 @@ class RoutePreviewController extends Controller
         $waypointids = array_filter($waypointsraw, 'strlen');
         $from = EveSystem::where('name', $request->from)->first()->system_id;
 
+        $starttime = microtime(true);
         foreach ($waypointids as $waypoint) {
             $waypoints[] = EveMap::shortestPath($from, $waypoint);
             $from = $waypoint;
         }
+        $totaltime = microtime(true) - $starttime;
 
         array_walk_recursive($waypoints, function(&$waypoint) {
-            $system = EveSystem::where('system_id', "$waypoint")->first();
-            $waypoint = $system->name;
+            $waypoint = EveSystem::where('system_id', "$waypoint")->first();
         });
 
         return view('routepreview.index', [
             'route' => $everoute,
-            'waypoints' => $waypoints
+            'waypoints' => $waypoints,
+            'time' => $totaltime
         ]);
     }
 }
