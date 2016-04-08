@@ -14,7 +14,7 @@
                     @include('common.errors')
 
                     <!-- System Search Form -->
-                    <form id="search-form" action="/system" method="GET" class="form-horizontal">
+                    <form id="search-form" action="{{ url('/system') }}" method="GET" class="form-horizontal">
                         {{ csrf_field() }}
 
                         <!-- System Name -->
@@ -25,7 +25,7 @@
                                     <div class="input-group">
                                         <input type="text" name="name" id="system-name" class="form-control" value="{{ old('name') ?: app('request')->input('name') ?: '' }}">
                                         <span class="input-group-btn">
-                                            <button type="button" class="btn btn-success btn-add" id="get_current_system">
+                                            <button type="button" class="btn btn-info" id="get_current_system">
                                                 <span class="glyphicon glyphicon-home"></span>
                                             </button>
                                         </span>

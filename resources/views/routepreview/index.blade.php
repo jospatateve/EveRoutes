@@ -14,7 +14,7 @@
                     @include('common.errors')
 
                     <!-- Route options form -->
-                    <form id="route-options-form" action="/route/{{ $route->id }}" method="GET" class="form-horizontal">
+                    <form id="route-options-form" action="{{ url('/route/'.$route->id) }}" method="GET" class="form-horizontal">
                         {{ csrf_field() }}
 
                         <!-- System Name -->
@@ -23,7 +23,7 @@
                             <div class="col-sm-6"><div class="input-group">
                                 <input type="text" name="from" id="system-name" class="form-control" value="{{ old('from') ?: app('request')->input('from') ?: '' }}">
                                 <span class="input-group-btn">
-                                    <button type="button" class="btn btn-success btn-add" id="get_current_system">
+                                    <button type="button" class="btn btn-info" id="get_current_system">
                                         <span class="glyphicon glyphicon-home"></span>
                                     </button>
                                 </span>
@@ -35,7 +35,7 @@
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-6">
                                 <button type="submit" class="btn btn-default">
-                                    <i class="fa fa-btn fa-play"></i>Go
+                                    <i class="fa fa-btn fa-search"></i>Go
                                 </button>
                             </div>
                         </div>
@@ -46,10 +46,33 @@
             @if (isset($waypoints) && !(count($errors) > 0))
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        {{ $route->name }} - Preview
+                        <form id="form-load-everoute-{{ $route->id }}" action="{{ url('/route/'.$route->id.'/loadwaypoints') }}" method="GET">
+                            {{ csrf_field() }}
+                        </form>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                {{ $route->name }} - Preview</div>
+                            <div class="col-sm-6 text-right">
+                                <button type="submit" form="form-load-everoute-{{ $route->id }}" id="load-everoute-{{ $route->id }}" class="btn btn-default">
+                                    <i class="fa fa-btn fa-play"></i>Load
+                                </button>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="panel-body">
+                        @if (Session::has('loadedsuccess'))
+                            <div class="alert alert-success">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <strong>Route "{{ Session::get('loadedsuccess') }}" successfully loaded into EVE.</strong>
+                            </div>
+                        @endif
+                        @if (Session::has('exception'))
+                            <div class="alert alert-danger">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <strong>Failed to load route ({{ Session::get('exception') }}).</strong>
+                            </div>
+                        @endif
                         @if (isset($exception))
                             <div class="alert alert-danger">
                                 <strong>{{ $exception }}</strong>

@@ -20,7 +20,7 @@
                 <div class="col-sm-6"><div class="input-group">
                     <input type="text" name="waypoints[]" id="everoute-waypoints-" class="form-control {{ $errors->has('waypoints.'.$index) ? 'input-error' : ''}}" value="">
                     <span class="input-group-btn">
-                        <button type="button" class="btn btn-success btn-add" id="add_system_name">
+                        <button type="button" class="btn btn-success" id="add_system_name">
                             <span class="glyphicon glyphicon-plus"></span>
                         </button>
                     </span>
@@ -35,7 +35,7 @@
                         <div class="col-sm-6"><div class="input-group">
                             <input type="text" name="waypoints[]" id="everoute-waypoints-" class="form-control" value="{{ $waypoint }}">
                             <span class="input-group-btn">
-                                <button type="button" class="btn btn-success btn-add" id="add_system_name">
+                                <button type="button" class="btn btn-success" id="add_system_name">
                                     <span class="glyphicon glyphicon-plus"></span>
                                 </button>
                             </span>
@@ -50,7 +50,7 @@
                         <div class="col-sm-6"><div class="input-group">
                             <input type="text" name="waypoints[]" id="everoute-waypoints-{{ $waypoint }}-{{ $index }}" class="form-control" value="{{ $waypoint }}">
                             <span class="input-group-btn">
-                                <button type="button" class="btn btn-danger btn-remove" id="remove_system_name-{{ $waypoint }}-{{ $index }}">
+                                <button type="button" class="btn btn-danger" id="remove_system_name-{{ $waypoint }}-{{ $index }}">
                                     <span class="glyphicon glyphicon-minus"></span>
                                 </button>
                             </span>

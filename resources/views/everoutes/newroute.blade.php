@@ -20,7 +20,7 @@
                 <div class="col-sm-6"><div class="input-group">
                     <input type="text" name="waypoints[]" id="everoute-waypoints-" class="form-control" value="">
                     <span class="input-group-btn">
-                        <button type="button" class="btn btn-success btn-add" id="add_system_name">
+                        <button type="button" class="btn btn-success" id="add_system_name">
                             <span class="glyphicon glyphicon-plus"></span>
                         </button>
                     </span>
@@ -51,7 +51,7 @@
             </div>
             <div class="modal-body">
                 <!-- Paste Route Form -->
-                <form id="pasteform" action="/route/paste" method="POST" class="form-horizontal">
+                <form id="pasteform" action="{{ url('/route/paste') }}" method="POST" class="form-horizontal">
                     {{ csrf_field() }}
 
                     <!-- Route Name -->

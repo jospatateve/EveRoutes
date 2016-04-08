@@ -5,7 +5,7 @@
             <div class="col-sm-6"><div class="input-group">
                 <input type="text" name="waypoints[]" id="everoute-waypoints-" class="form-control {{ $errors->has('waypoints.'.$index) ? 'input-error' : ''}}" value="{{ $waypoint }}">
                 <span class="input-group-btn">
-                    <button type="button" class="btn btn-success btn-add {{ $errors->has('waypoints.'.$index) ? 'input-error' : ''}}" id="add_system_name">
+                    <button type="button" class="btn btn-success {{ $errors->has('waypoints.'.$index) ? 'input-error' : ''}}" id="add_system_name">
                         <span class="glyphicon glyphicon-plus"></span>
                     </button>
                 </span>
@@ -20,7 +20,7 @@
                 <div class="col-sm-6"><div class="input-group">
                     <input type="text" name="waypoints[]" id="everoute-waypoints-{{ $waypoint }}-{{ $index }}" class="form-control {{ $errors->has('waypoints.'.$index) ? 'input-error' : ''}}" value="{{ $waypoint }}">
                     <span class="input-group-btn">
-                        <button type="button" class="btn btn-danger btn-remove {{ $errors->has('waypoints.'.$index) ? 'input-error' : ''}}" id="remove_system_name-{{ $waypoint }}-{{ $index }}">
+                        <button type="button" class="btn btn-danger {{ $errors->has('waypoints.'.$index) ? 'input-error' : ''}}" id="remove_system_name-{{ $waypoint }}-{{ $index }}">
                             <span class="glyphicon glyphicon-minus"></span>
                         </button>
                     </span>

@@ -77,8 +77,8 @@
                 .val("");
             $("#waypoint-form-" + system_name_form_index + " > div > div > span > button")
                 .attr("id", "remove_system_name-" + system_name_form_index)
-                .removeClass("input-error btn-add btn-success")
-                .addClass("btn-remove btn-danger")
+                .removeClass("input-error btn-success")
+                .addClass("btn-danger")
                 .html("<span class=\"glyphicon glyphicon-minus\"></span>");
 
             // Enable autocomplete for new input field

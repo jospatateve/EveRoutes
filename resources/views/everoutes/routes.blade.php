@@ -57,8 +57,8 @@
                                                 <p>Are you sure you want to delete the route "{{ $route->name }}"?</p>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="submit" form="form-delete-everoute-{{ $route->id }}" class="btn btn-primary">Yes</button>
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                                                <button type="submit" form="form-delete-everoute-{{ $route->id }}" class="btn btn-default">Yes</button>
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
                                             </div>
                                         </div>
                                     </div>
