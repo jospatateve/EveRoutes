@@ -46,33 +46,19 @@
             @if (isset($waypoints) && !(count($errors) > 0))
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <form id="form-load-everoute-{{ $route->id }}" action="{{ url('/route/'.$route->id.'/loadwaypoints') }}" method="GET">
-                            {{ csrf_field() }}
-                        </form>
                         <div class="row">
                             <div class="col-sm-6">
-                                {{ $route->name }} - Preview</div>
+                                {{ $route->name }} - Preview
+                            </div>
                             <div class="col-sm-6 text-right">
-                                <button type="submit" form="form-load-everoute-{{ $route->id }}" id="load-everoute-{{ $route->id }}" class="btn btn-default">
+                                <button type="button" id="load-everoute-{{ $route->id }}" class="btn btn-default">
                                     <i class="fa fa-btn fa-play"></i>Load
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <div class="panel-body">
-                        @if (Session::has('loadedsuccess'))
-                            <div class="alert alert-success">
-                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                <strong>Route "{{ Session::get('loadedsuccess') }}" successfully loaded into EVE.</strong>
-                            </div>
-                        @endif
-                        @if (Session::has('exception'))
-                            <div class="alert alert-danger">
-                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                <strong>Failed to load route ({{ Session::get('exception') }}).</strong>
-                            </div>
-                        @endif
+                    <div id="preview-panel" class="panel-body">
                         @if (isset($exception))
                             <div class="alert alert-danger">
                                 <strong>{{ $exception }}</strong>
@@ -84,14 +70,14 @@
                                 <th>Route</th>
                                 <th>Security Class</th>
                                 <th>Security Status</th>
-                                <th>Sovereignty</th>
+                                <th>Sovereignty (ihub)</th>
                             </thead>
                             <tbody>
-                                @foreach ($waypoints as $route)
-                                    @foreach ($route as $index => $waypoint)
+                                @foreach ($waypoints as $routeitem)
+                                    @foreach ($routeitem as $index => $waypoint)
                                         @if ($index > 0)
                                             <tr>
-                                                <td class="table-text {{ ($index == count($route)-1) ? 'strong' : '' }}">{{ $waypoint->getName() }}</td>
+                                                <td class="table-text {{ ($index == count($routeitem)-1) ? 'strong' : '' }}">{{ $waypoint->getName() }}</td>
                                                 <td class="table-text">{{ $waypoint->getSecurityClass() }}</td>
                                                 <td class="table-text">{{ round($waypoint->getSecurityStatus(), 2) }}</td>
                                                 <td class="table-text">{{ $waypoint->isWH() ? '' : $waypoint->getAlliance() }}</td>
@@ -114,9 +100,18 @@
 @endsection
 
 @section('scripts')
-    function display_error_message(message) {
-        $("#options-form-panel").prepend(
+    function display_error_message(parent, message) {
+        parent.prepend(
             "<div class=\"alert alert-danger\">" +
+            "   <a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>" +
+            "   <strong>" + message + "</strong>" +
+            "</div>"
+        );
+    }
+
+    function display_success_message(parent, message) {
+        parent.prepend(
+            "<div class=\"alert alert-success\">" +
             "   <a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>" +
             "   <strong>" + message + "</strong>" +
             "</div>"
@@ -142,10 +137,21 @@
                 if (json.valid) {
                     $("#system-name").val(json.location.name);
                 } else {
-                    display_error_message("Unable to locate {{ Auth::user()->name }}.");
+                    display_error_message($("#options-form-panel"), "Unable to locate {{ Auth::user()->name }}.");
                 }
             }).fail(function(jqXHR) {
-                display_error_message("Unable to locate {{ Auth::user()->name }} (" + jqXHR.responseJSON.error + ")");
+                display_error_message($("#options-form-panel"), "Unable to locate {{ Auth::user()->name }} (" + jqXHR.responseJSON.error + ")");
+            });
+        });
+
+        // Load waypoints button
+        $("#load-everoute-{{ $route->id }}").click(function() {
+            $.getJSON(
+                "{{ url('/route/'.$route->id.'/loadwaypoints/json') }}"
+            ).done(function(json) {
+                display_success_message($("#preview-panel"), "Route \"" + json.loadedsuccess + "\" successfully loaded into EVE.");
+            }).fail(function(jqXHR) {
+                display_error_message($("#preview-panel"), "Failed to load route (" + jqXHR.responseJSON.exception + ").");
             });
         });
     });

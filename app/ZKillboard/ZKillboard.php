@@ -30,12 +30,12 @@ class ZKillboard
     public function getSystemStats($systemid)
     {
         $url = $this->api . "stats/solarSystemID/$systemid/";
-        return $this->getRequest($url);
+        return new ZKillAPIResponse($this->getRequest($url));
     }
 
     public function getSystemLatestKill($systemid)
     {
         $url = $this->api . "kills/solarSystemID/$systemid/orderDirection/desc/limit/1/";
-        return $this->getRequest($url)[0];
+        return new ZKillMail($this->getRequest($url)[0]);
     }
 }

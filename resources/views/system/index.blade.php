@@ -74,16 +74,18 @@
                         <p>No system info to display.</p>
                     @endif
                     @if (isset($stats))
-                        <!--<pre>{{ json_encode($stats, JSON_PRETTY_PRINT) }}</pre>-->
+                        <!--<pre>{{ json_encode($stats->getJSON(), JSON_PRETTY_PRINT) }}</pre>-->
                     @endif
                     @if (isset($kill))
                         <ul>
-                            <li>Latest kill: {{ $kill['killTime'] }}</li>
-                            <li>Victim: {{ $kill['victim']['characterName'] }}</li>
-                            <li>Attackers: {{ implode(', ', array_map(function($v) { return $v['characterName']; }, $kill['attackers'])) }}</li>
-                            <li>Killmail: <a href="https://zkillboard.com/kill/{{ $kill['killID'] }}/">zkillboard</a></li>
+                            <li>Latest kill: {{ $kill->getTime() }}</li>
+                            <li>Time since latest kill: {{ number_format($kill->getTimeDiff() / 3600, 2) }} hours</li>
+                            <li>Victim: {{ $kill->getVictim() }}</li>
+                            <li>Attackers: {{ implode(', ', $kill->getAttackers()) }}</li>
+                            <li>Final blow: {{ $kill->getFinalBlow() }}</li>
+                            <li>Killmail: <a href="{{ $kill->getUrl() }}">zkillboard</a></li>
                         </ul>
-                        <!--<pre>{{ json_encode($kill, JSON_PRETTY_PRINT) }}</pre>-->
+                        <!--<pre>{{ json_encode($kill->getJSON(), JSON_PRETTY_PRINT) }}</pre>-->
                     @endif
                 </div>
             </div>

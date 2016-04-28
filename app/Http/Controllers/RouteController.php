@@ -47,23 +47,6 @@ class RouteController extends Controller
         ]);
     }
 
-    public function loadwaypoints(Request $request, EveRoute $everoute)
-    {
-        $this->authorize($everoute);
-
-        $waypointsraw = explode(';', $everoute->waypoints);
-        $waypoints = array_filter($waypointsraw, 'strlen');
-
-        $evecrest = new EveCREST($this->eveoauth);
-
-        try {
-            $evecrest->setWaypoints($request, Auth::user()->userid, $waypoints);
-            return back()->withInput()->with('loadedsuccess', $everoute->name);
-        } catch (\Exception $e) {
-            return back()->withInput()->with('exception', $e->getMessage());
-        }
-    }
-
     public function store(Request $request)
     {
         $this->validate($request, [

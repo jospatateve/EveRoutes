@@ -11,7 +11,8 @@ return [
         'characterStatsRead',
     ],
     'crest' => 'https://crest-tq.eveonline.com/',
-    'public-crest' => 'https://public-crest.eveonline.com/',
+//  'public-crest' => 'https://public-crest.eveonline.com/',
+    'public-crest' => 'https://crest-tq.eveonline.com/',
     'stats-crest' => 'https://characterstats.tech.ccp.is/v1/',
     'eveserverip' => '',
 ];

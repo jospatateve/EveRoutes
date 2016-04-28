@@ -41,7 +41,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/routes', 'RouteController@index');
     Route::get('/route/{everoute}', 'RoutePreviewController@index');
     Route::get('/route/{everoute}/edit', 'RouteController@index_update');
-    Route::get('/route/{everoute}/loadwaypoints', 'RouteController@loadwaypoints');
+    Route::get('/route/{everoute}/loadwaypoints', 'LoadWaypointsController@loadwaypoints');
+    Route::get('/route/{everoute}/loadwaypoints/json', 'LoadWaypointsController@loadwaypoints_json');
     Route::post('/route', 'RouteController@store');
     Route::post('/route/paste', 'RouteController@paste');
     Route::post('/route/{everoute}', 'RouteController@update');
