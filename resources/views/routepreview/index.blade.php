@@ -67,20 +67,39 @@
 
                         <table class="table table-striped table-counted">
                              <thead>
-                                <th>Route</th>
-                                <th>Security Class</th>
-                                <th>Security Status</th>
+                                <th>#</th>
+                                <th>Waypoint</th>
+                                <th>Sec Status</th>
+                                <th>Kills (1 hour)</th>
                                 <th>Sovereignty (ihub)</th>
+                                <th>Links</th>
                             </thead>
                             <tbody>
                                 @foreach ($waypoints as $routeitem)
                                     @foreach ($routeitem as $index => $waypoint)
                                         @if ($index > 0)
                                             <tr>
-                                                <td class="table-text {{ ($index == count($routeitem)-1) ? 'strong' : '' }}">{{ $waypoint->getName() }}</td>
-                                                <td class="table-text">{{ $waypoint->getSecurityClass() }}</td>
-                                                <td class="table-text">{{ round($waypoint->getSecurityStatus(), 2) }}</td>
-                                                <td class="table-text">{{ $waypoint->isWH() ? '' : $waypoint->getAlliance() }}</td>
+                                                <td class="table-text"></td>
+                                                <td class="table-text {{ ($index == count($routeitem)-1) ? 'strong' : '' }}">
+                                                    {{ $waypoint->getName() }}
+                                                </td>
+                                                <td class="table-text">
+                                                    <span class="label {{ ($waypoint->getSecurityStatus() <= 0.0) ? 'label-danger' : (($waypoint->getSecurityStatus() < 0.5) ? 'label-warning' : 'label-success') }}">{{ round($waypoint->getSecurityStatus(), 2) }}</span>
+                                                </td>
+                                                <td class="table-text">
+                                                    @if (isset($kills) && array_key_exists($waypoint->getId(), $kills))
+                                                        <span class="label {{ $kills[$waypoint->getId()]->isEmpty() ? 'label-success' : (($kills[$waypoint->getId()]->getCount() > 2) ? 'label-danger' : 'label-warning') }}">{{ $kills[$waypoint->getId()]->getCount() }}</span>
+                                                    @endif
+                                                </td>
+                                                <td class="table-text">
+                                                    @if (!$waypoint->isWH() && !empty($waypoint->getAlliance()))
+                                                        {{ $waypoint->getAlliance() }}
+                                                    @endif
+                                                </td>
+                                                <td class="table-text">
+                                                    <a href="https://zkillboard.com/system/{{ $waypoint->getId() }}/"><span class="label label-default">zkillboard</span></a>
+                                                    <a href="https://evemaps.dotlan.net/system/{{ $waypoint->getName() }}/"><span class="label label-default">dotlan</span></a>
+                                                </td>
                                             </tr>
                                         @endif
                                     @endforeach

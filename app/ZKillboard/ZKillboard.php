@@ -38,4 +38,10 @@ class ZKillboard
         $url = $this->api . "kills/solarSystemID/$systemid/orderDirection/desc/limit/1/";
         return new ZKillMail($this->getRequest($url)[0]);
     }
+
+    public function getSystemKillsOneHour($systemid)
+    {
+        $url = $this->api . "stats/solarSystemID/$systemid/pastSeconds/3600/";
+        return new ZKillMailList($this->getRequest($url));
+    }
 }

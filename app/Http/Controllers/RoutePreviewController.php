@@ -11,6 +11,8 @@ use App\EveOnline\EveMap;
 use App\EveOnline\EveOAuthProvider;
 use App\EveOnline\EvePublicCREST;
 
+use App\ZKillboard\ZKillboard;
+
 class RoutePreviewController extends Controller
 {
     private $eveoauth;
@@ -46,14 +48,20 @@ class RoutePreviewController extends Controller
         try {
             $eveoauth = new EveOAuthProvider;
             $evepubliccrest = new EvePublicCREST($eveoauth);
+            $zkill = new ZKillboard;
+            $kills = [];
      
-            array_walk_recursive($waypoints, function(&$waypoint) use ($evepubliccrest) {
+            array_walk_recursive($waypoints, function(&$waypoint) use ($evepubliccrest, $zkill, &$kills) {
                 $waypoint = $evepubliccrest->getSystem($waypoint);
+                if (!array_key_exists($waypoint->getId(), $kills)) {
+                    $kills[$waypoint->getId()] = $zkill->getSystemKillsOneHour($waypoint->getId());
+                }
             });
 
             return view('routepreview.index', [
                 'route' => $everoute,
                 'waypoints' => $waypoints,
+                'kills' => $kills,
                 'time' => $totaltime
             ]);
         } catch (\Exception $e) {
