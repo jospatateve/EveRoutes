@@ -69,8 +69,9 @@
                              <thead>
                                 <th>#</th>
                                 <th>Waypoint</th>
-                                <th>Sec Status</th>
+                                <th>Security</th>
                                 <th>Kills (1 hour)</th>
+                                <th>Last kill (ago)</th>
                                 <th>Sovereignty (ihub)</th>
                                 <th>Links</th>
                             </thead>
@@ -86,11 +87,14 @@
                                                 <td class="table-text">
                                                     <span class="label {{ ($waypoint->getSecurityStatus() <= 0.0) ? 'label-danger' : (($waypoint->getSecurityStatus() < 0.5) ? 'label-warning' : 'label-success') }}">{{ round($waypoint->getSecurityStatus(), 2) }}</span>
                                                 </td>
-                                                <td class="table-text">
-                                                    @if (isset($kills) && array_key_exists($waypoint->getId(), $kills))
-                                                        <span class="label {{ $kills[$waypoint->getId()]->isEmpty() ? 'label-success' : (($kills[$waypoint->getId()]->getCount() > 2) ? 'label-danger' : 'label-warning') }}">{{ $kills[$waypoint->getId()]->getCount() }}</span>
-                                                    @endif
-                                                </td>
+                                                @if (isset($kills) && array_key_exists($waypoint->getId(), $kills))
+                                                    <td class="table-text">
+                                                        <span class="label {{ $kills[$waypoint->getId()]['hour']->isEmpty() ? 'label-success' : (($kills[$waypoint->getId()]['hour']->getCount() > 2) ? 'label-danger' : 'label-warning') }}">{{ $kills[$waypoint->getId()]['hour']->getCount() }}</span>
+                                                    </td>
+                                                    <td class="table-text">
+                                                        {{ $kills[$waypoint->getId()]['latest']->getTimeDiffFormatted() }}
+                                                    </td>
+                                                @endif
                                                 <td class="table-text">
                                                     @if (!$waypoint->isWH() && !empty($waypoint->getAlliance()))
                                                         {{ $waypoint->getAlliance() }}

@@ -54,7 +54,8 @@ class RoutePreviewController extends Controller
             array_walk_recursive($waypoints, function(&$waypoint) use ($evepubliccrest, $zkill, &$kills) {
                 $waypoint = $evepubliccrest->getSystem($waypoint);
                 if (!array_key_exists($waypoint->getId(), $kills)) {
-                    $kills[$waypoint->getId()] = $zkill->getSystemKillsOneHour($waypoint->getId());
+                    $kills[$waypoint->getId()]['latest'] = $zkill->getSystemLatestKill($waypoint->getId());
+                    $kills[$waypoint->getId()]['hour'] = $zkill->getSystemKillsOneHour($waypoint->getId());
                 }
             });
 

@@ -26,6 +26,17 @@ class ZKillMail extends ZKillAPIResponse
         return $now->getTimeStamp() - $then->getTimeStamp();
     }
 
+    public function getTimeDiffFormatted()
+    {
+        $seconds = $this->getTimeDiff();
+
+        $days = floor($seconds / (60*60*24));
+        $hours = gmdate('H', $seconds);
+        $minutes = gmdate('i', $seconds);
+
+        return sprintf("%02dd %02dh %02dm", $days, $hours, $minutes);
+    }
+
     public function getVictim()
     {
         return $this->get('victim')['characterName'];
