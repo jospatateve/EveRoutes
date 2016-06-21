@@ -84,7 +84,7 @@ class EveCREST
             'clearOtherWaypoints' => $reset
         ];
 
-        $url = $this->crest . "characters/$userid/navigation/waypoints/";
+        $url = $this->crest. "characters/$userid/ui/autopilot/waypoints/";
         $this->postRequest($request, $url, $waypoint_json);
     }
 

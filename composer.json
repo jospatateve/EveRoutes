@@ -8,7 +8,8 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
         "predis/predis": "^1.0",
-        "evelabs/oauth2-eveonline": "^1.1"
+        "evelabs/oauth2-eveonline": "^1.1",
+        "fabpot/goutte": "^3.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

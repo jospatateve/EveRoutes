@@ -26,24 +26,40 @@ class RoutePreviewController extends Controller
     {
         $this->authorize('loadwaypoints', $everoute);
         $this->validate($request, [
-            'from' => 'max:255|exists:eve_systems,name|notwh'
+            'from' => 'max:255|exists:eve_systems,name|notwh',
+            'type' => 'in:0,1,2'
         ]);
  
         if (!$request->has('from')) {
             return view('routepreview.index')->with('route', $everoute);
         }
 
+        $type = $request->type ?: 0;
+
         $waypoints = [];
         $waypointsraw = explode(';', $everoute->waypoints);
         $waypointids = array_filter($waypointsraw, 'strlen');
-        $from = EveSystem::where('name', $request->from)->first()->system_id;
+        /*$from = EveSystem::where('name', $request->from)->first()->system_id;
 
         $starttime = microtime(true);
         foreach ($waypointids as $waypoint) {
             $waypoints[] = EveMap::shortestPath($from, $waypoint);
             $from = $waypoint;
         }
+        $totaltime = microtime(true) - $starttime;*/
+
+        $dotlan = new \App\Dotlan\Dotlan;
+        $systemstovisit = [];
+        $systemstovisit[] = $request->from;
+        foreach ($waypointids as $waypointid) {
+            $systemstovisit[] = EveSystem::where('system_id', $waypointid)->first()->name;
+        }
+        $starttime = microtime(true);
+        $waypointnames = $dotlan->getRoute($type, $systemstovisit);
         $totaltime = microtime(true) - $starttime;
+        foreach ($waypointnames as $waypointname) {
+            $waypoints[] = EveSystem::where('name', $waypointname)->first()->system_id;
+        }
 
         try {
             $eveoauth = new EveOAuthProvider;

@@ -30,6 +30,23 @@
                             </div></div>
                         </div>
 
+                        <!-- Route Preference -->
+                        <div class="form-group">
+                            <label for="system-name" class="col-sm-3 control-label">Route Options</label>
+                            <div class="col-sm-6"><div class="input-group">
+                                <div class="btn-group" data-toggle="buttons">
+                                    <label class="btn btn-default {{ (empty(app('request')->input('type')) || (app('request')->input('type') == '0')) ? 'active' : ''}}">
+                                        <input type="radio" name="type" value="0" {{ (app('request')->input('type') == '0') ? 'checked' : ''}}> Fastest
+                                    </label>
+                                    <label class="btn btn-default {{ (app('request')->input('type') == '1') ? 'active' : ''}}">
+                                        <input type="radio" name="type" value="1" {{ (app('request')->input('type') == '1') ? 'checked' : ''}}> Safest
+                                    </label>
+                                    <label class="btn btn-default {{ (app('request')->input('type') == '2') ? 'active' : ''}}">
+                                        <input type="radio" name="type" value="2" {{ (app('request')->input('type') == '2') ? 'checked' : ''}}> Lowsec/0.0
+                                    </label>
+                                </div>
+                            </div></div>
+                        </div>
 
                         <!-- Search Button -->
                         <div class="form-group">
@@ -76,37 +93,33 @@
                                 <th>Links</th>
                             </thead>
                             <tbody>
-                                @foreach ($waypoints as $routeitem)
-                                    @foreach ($routeitem as $index => $waypoint)
-                                        @if ($index > 0)
-                                            <tr>
-                                                <td class="table-text"></td>
-                                                <td class="table-text {{ ($index == count($routeitem)-1) ? 'strong' : '' }}">
-                                                    {{ $waypoint->getName() }}
-                                                </td>
-                                                <td class="table-text">
-                                                    <span class="label {{ ($waypoint->getSecurityStatus() <= 0.0) ? 'label-danger' : (($waypoint->getSecurityStatus() < 0.5) ? 'label-warning' : 'label-success') }}">{{ round($waypoint->getSecurityStatus(), 2) }}</span>
-                                                </td>
-                                                @if (isset($kills) && array_key_exists($waypoint->getId(), $kills))
-                                                    <td class="table-text">
-                                                        <span class="label {{ $kills[$waypoint->getId()]['hour']->isEmpty() ? 'label-success' : (($kills[$waypoint->getId()]['hour']->getCount() > 2) ? 'label-danger' : 'label-warning') }}">{{ $kills[$waypoint->getId()]['hour']->getCount() }}</span>
-                                                    </td>
-                                                    <td class="table-text">
-                                                        {{ $kills[$waypoint->getId()]['latest']->getTimeDiffFormatted() }}
-                                                    </td>
-                                                @endif
-                                                <td class="table-text">
-                                                    @if (!$waypoint->isWH() && !empty($waypoint->getAlliance()))
-                                                        {{ $waypoint->getAlliance() }}
-                                                    @endif
-                                                </td>
-                                                <td class="table-text">
-                                                    <a href="https://zkillboard.com/system/{{ $waypoint->getId() }}/"><span class="label label-default">zkillboard</span></a>
-                                                    <a href="https://evemaps.dotlan.net/system/{{ $waypoint->getName() }}/"><span class="label label-default">dotlan</span></a>
-                                                </td>
-                                            </tr>
+                                @foreach ($waypoints as $waypoint)
+                                    <tr>
+                                        <td class="table-text"></td>
+                                        <td class="table-text">
+                                            {{ $waypoint->getName() }}
+                                        </td>
+                                        <td class="table-text">
+                                            <span class="label {{ ($waypoint->getSecurityStatus() <= 0.0) ? 'label-danger' : (($waypoint->getSecurityStatus() < 0.5) ? 'label-warning' : 'label-success') }}">{{ round($waypoint->getSecurityStatus(), 2) }}</span>
+                                        </td>
+                                        @if (isset($kills) && array_key_exists($waypoint->getId(), $kills))
+                                            <td class="table-text">
+                                                <span class="label {{ $kills[$waypoint->getId()]['hour']->isEmpty() ? 'label-success' : (($kills[$waypoint->getId()]['hour']->getCount() > 2) ? 'label-danger' : 'label-warning') }}">{{ $kills[$waypoint->getId()]['hour']->getCount() }}</span>
+                                            </td>
+                                            <td class="table-text">
+                                                {{ $kills[$waypoint->getId()]['latest']->getTimeDiffFormatted() }}
+                                            </td>
                                         @endif
-                                    @endforeach
+                                        <td class="table-text">
+                                            @if (!$waypoint->isWH() && !empty($waypoint->getAlliance()))
+                                                {{ $waypoint->getAlliance() }}
+                                            @endif
+                                        </td>
+                                        <td class="table-text">
+                                            <a href="https://zkillboard.com/system/{{ $waypoint->getId() }}/"><span class="label label-default">zkillboard</span></a>
+                                            <a href="https://evemaps.dotlan.net/system/{{ $waypoint->getName() }}/"><span class="label label-default">dotlan</span></a>
+                                        </td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>
