@@ -63,11 +63,11 @@
             @if (isset($waypoints) && !(count($errors) > 0))
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                {{ $route->name }} - Preview
+                        <div class="row vertical-center">
+                            <div class="col-sm-10">
+                                <h3>{{ $route->name }} <small>Preview</small></h3>
                             </div>
-                            <div class="col-sm-6 text-right">
+                            <div class="col-sm-2 text-right">
                                 <button type="button" id="load-everoute-{{ $route->id }}" class="btn btn-default">
                                     <i class="fa fa-btn fa-play"></i>Load
                                 </button>
@@ -96,7 +96,7 @@
                                 @foreach ($waypoints as $waypoint)
                                     <tr>
                                         <td class="table-text"></td>
-                                        <td class="table-text">
+                                        <td class="table-text {{ in_array($waypoint->getName(), $systems) ? 'strong' : '' }}">
                                             {{ $waypoint->getName() }}
                                         </td>
                                         <td class="table-text">
@@ -158,11 +158,11 @@
         // Autocomplete
         $("#system-name").autocomplete({
             source: "/system/autocomplete",
-            select: function(event, ui) {
+            /*select: function(event, ui) {
                 $(this).val(ui.item.value);
                 $("#route-options-form").submit();
                 return false;
-            }
+            }*/
         });
 
         // Get the current location
@@ -210,5 +210,12 @@
 
     .strong {
         font-weight: bold;
+    }
+
+    .vertical-center {
+        max-height: 100%;
+        max-height: 100vh;
+        display: flex;
+        align-items: center;
     }
 @endsection

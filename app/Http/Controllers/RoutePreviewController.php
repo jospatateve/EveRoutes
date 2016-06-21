@@ -39,14 +39,6 @@ class RoutePreviewController extends Controller
         $waypoints = [];
         $waypointsraw = explode(';', $everoute->waypoints);
         $waypointids = array_filter($waypointsraw, 'strlen');
-        /*$from = EveSystem::where('name', $request->from)->first()->system_id;
-
-        $starttime = microtime(true);
-        foreach ($waypointids as $waypoint) {
-            $waypoints[] = EveMap::shortestPath($from, $waypoint);
-            $from = $waypoint;
-        }
-        $totaltime = microtime(true) - $starttime;*/
 
         $dotlan = new \App\Dotlan\Dotlan;
         $systemstovisit = [];
@@ -76,6 +68,7 @@ class RoutePreviewController extends Controller
             });
 
             return view('routepreview.index', [
+                'systems' => $systemstovisit,
                 'route' => $everoute,
                 'waypoints' => $waypoints,
                 'kills' => $kills,
@@ -83,6 +76,7 @@ class RoutePreviewController extends Controller
             ]);
         } catch (\Exception $e) {
             return view('routepreview.index', [
+                'systems' => $systemstovisit,
                 'route' => $everoute,
                 'waypoints' => $waypoints,
                 'time' => $totaltime,
