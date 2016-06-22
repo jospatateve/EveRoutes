@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 use App\EveRoute;
 use App\EveSystem;
 
-use App\EveOnline\EveMap;
 use App\EveOnline\EveOAuthProvider;
 use App\EveOnline\EvePublicCREST;
 
+use App\Dotlan\Dotlan;
 use App\ZKillboard\ZKillboard;
 
 class RoutePreviewController extends Controller
@@ -40,26 +40,28 @@ class RoutePreviewController extends Controller
         $waypointsraw = explode(';', $everoute->waypoints);
         $waypointids = array_filter($waypointsraw, 'strlen');
 
-        $dotlan = new \App\Dotlan\Dotlan;
+        $starttime = microtime(true);
+        $dotlan = new Dotlan;
         $systemstovisit = [];
         $systemstovisit[] = $request->from;
+        $waypointidnamemap = EveSystem::wherein('system_id', $waypointids)->pluck('name', 'system_id');
         foreach ($waypointids as $waypointid) {
-            $systemstovisit[] = EveSystem::where('system_id', $waypointid)->first()->name;
+            $systemstovisit[] = $waypointidnamemap[$waypointid];
         }
-        $starttime = microtime(true);
         $waypointnames = $dotlan->getRoute($type, $systemstovisit);
-        $totaltime = microtime(true) - $starttime;
+        $waypointnameidmap = EveSystem::wherein('name', array_unique($waypointnames))->pluck('system_id', 'name');
         foreach ($waypointnames as $waypointname) {
-            $waypoints[] = EveSystem::where('name', $waypointname)->first()->system_id;
+            $waypoints[] = $waypointnameidmap[$waypointname];
         }
+        $totaltime = microtime(true) - $starttime;
 
         try {
             $eveoauth = new EveOAuthProvider;
             $evepubliccrest = new EvePublicCREST($eveoauth);
             $zkill = new ZKillboard;
             $kills = [];
-     
-            array_walk_recursive($waypoints, function(&$waypoint) use ($evepubliccrest, $zkill, &$kills) {
+
+            array_walk($waypoints, function(&$waypoint) use ($evepubliccrest, $zkill, &$kills) {
                 $waypoint = $evepubliccrest->getSystem($waypoint);
                 if (!array_key_exists($waypoint->getId(), $kills)) {
                     $kills[$waypoint->getId()]['latest'] = $zkill->getSystemLatestKill($waypoint->getId());

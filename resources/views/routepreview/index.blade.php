@@ -42,7 +42,7 @@
                                         <input type="radio" name="type" value="1" {{ (app('request')->input('type') == '1') ? 'checked' : ''}}> Safest
                                     </label>
                                     <label class="btn btn-default {{ (app('request')->input('type') == '2') ? 'active' : ''}}">
-                                        <input type="radio" name="type" value="2" {{ (app('request')->input('type') == '2') ? 'checked' : ''}}> Lowsec/0.0
+                                        <input type="radio" name="type" value="2" {{ (app('request')->input('type') == '2') ? 'checked' : ''}}> Prefer Lowsec/0.0
                                     </label>
                                 </div>
                             </div></div>

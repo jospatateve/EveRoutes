@@ -2,6 +2,7 @@
 
 namespace App\EveOnline;
 
+use Cache;
 use Config;
 
 class EvePublicCREST
@@ -30,6 +31,8 @@ class EvePublicCREST
     public function getSystem($systemid)
     {
         $url = $this->crest . "solarsystems/$systemid/";
-        return new EveSystem($this->getRequest($url));
+        return Cache::remember("eve_system_$systemid", 60*24, function() use ($url) {
+            return new EveSystem($this->getRequest($url));
+        });
     }
 }
